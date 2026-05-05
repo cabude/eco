@@ -4,117 +4,134 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>El tiempo en tu plato — Existo en Relación</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0E1A0A;
-    --bg2: #162010;
-    --verde: #7CB84A;
-    --verde-light: #A8D97A;
-    --verde-dim: #3A6020;
-    --crema: #F0E8D0;
-    --crema-dim: #B8A888;
-    --text-sec: #8A9880;
-    --card: #1A2814;
-    --card-border: #2A3820;
+    --bg:          #F5F1E6;
+    --bg2:         #EDE8D6;
+    --border:      #D8D2BE;
+    --border-dark: #B8B0A0;
+    --verde:       #2D5016;
+    --verde-med:   #4A7A22;
+    --verde-light: #C0DD97;
+    --verde-pale:  #EAF3DE;
+    --text:        #1A1A12;
+    --text-sec:    #5A5A48;
+    --text-ter:    #9A9A82;
+    --white:       #FFFFFF;
+    --radius-sm:   8px;
+    --radius-md:   14px;
+    --radius-lg:   20px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--crema); font-family: 'Outfit', sans-serif; min-height: 100vh; overflow-x: hidden; }
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background: radial-gradient(ellipse at 20% 50%, rgba(124,184,74,0.04) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(212,114,74,0.04) 0%, transparent 50%);
-    pointer-events: none;
-  }
-  .container { max-width: 680px; margin: 0 auto; padding: 52px 24px 80px; position: relative; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 660px; margin: 0 auto; padding: 0 24px 96px; }
 
-  header { margin-bottom: 48px; animation: fadeUp 0.7s ease both; }
-  .eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--verde); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-  .eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--verde); }
-  h1 { font-family: 'Playfair Display', serif; font-size: clamp(30px, 6vw, 48px); font-weight: 400; line-height: 1.15; color: var(--crema); margin-bottom: 14px; }
-  h1 span { color: var(--verde); font-style: italic; }
-  .subtitle { font-size: 14px; color: var(--text-sec); line-height: 1.7; max-width: 400px; }
+  /* ── NAV ── */
+  nav { display: flex; align-items: center; gap: 8px; padding: 24px 0 32px; border-bottom: 1px solid var(--border); margin-bottom: 52px; animation: fadeUp 0.5s ease both; }
+  .nav-back { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--text-ter); text-decoration: none; letter-spacing: 0.04em; display: flex; align-items: center; gap: 6px; transition: color 0.2s; white-space: nowrap; }
+  .nav-back:hover { color: var(--verde); }
+  .nav-sep { color: var(--border-dark); font-size: 12px; flex-shrink: 0; }
+  .nav-current { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-sec); letter-spacing: 0.04em; text-transform: uppercase; }
+  .nav-credito { margin-left: auto; font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text-ter); text-align: right; letter-spacing: 0.02em; white-space: nowrap; }
 
-  .selector-wrap { margin-bottom: 40px; animation: fadeUp 0.7s 0.1s ease both; }
-  .selector-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-sec); margin-bottom: 12px; }
-  .prod-btns { display: flex; flex-wrap: wrap; gap: 8px; }
-  .prod-btn { background: var(--card); border: 1px solid var(--card-border); border-radius: 100px; padding: 8px 16px; font-family: 'Outfit', sans-serif; font-size: 13px; color: var(--text-sec); cursor: pointer; transition: all 0.2s; }
-  .prod-btn:hover { border-color: var(--verde-dim); color: var(--verde-light); }
-  .prod-btn.activo { background: var(--verde-dim); border-color: var(--verde); color: var(--verde-light); font-weight: 500; }
+  /* ── HEADER ── */
+  header { margin-bottom: 40px; animation: fadeUp 0.5s 0.05s ease both; }
+  .eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--verde-med); margin-bottom: 14px; }
+  h1 { font-family: 'Syne', sans-serif; font-size: clamp(36px, 8vw, 60px); font-weight: 800; line-height: 0.95; letter-spacing: -0.02em; color: var(--text); margin-bottom: 14px; }
+  h1 em { font-style: normal; color: var(--verde); }
+  .subtitle { font-size: 14px; color: var(--text-sec); line-height: 1.7; max-width: 440px; }
 
-  #resultado { display: none; animation: fadeUp 0.5s ease both; }
+  /* ── SELECTOR ── */
+  .selector-wrap { margin-bottom: 36px; animation: fadeUp 0.5s 0.1s ease both; }
+  .selector-label { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-ter); margin-bottom: 12px; }
+  .prod-btns { display: flex; flex-wrap: wrap; gap: 7px; }
+  .prod-btn { background: var(--white); border: 1.5px solid var(--border); border-radius: 100px; padding: 7px 16px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 400; color: var(--text-sec); cursor: pointer; transition: all 0.18s; }
+  .prod-btn:hover { border-color: var(--verde-med); color: var(--verde); }
+  .prod-btn.activo { background: var(--verde); border-color: var(--verde); color: var(--white); font-weight: 500; }
 
-  .frase-grande { font-family: 'Playfair Display', serif; font-size: clamp(16px, 3.2vw, 22px); font-style: italic; color: var(--crema); line-height: 1.55; margin-bottom: 28px; padding-left: 18px; border-left: 2px solid var(--verde); }
+  /* ── RESULTADO ── */
+  #resultado { display: none; animation: fadeUp 0.4s ease both; }
 
-  .datos-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 24px; }
-  .dato-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 14px; padding: 18px 14px; text-align: center; }
-  .dato-num { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 700; color: var(--verde-light); line-height: 1; margin-bottom: 4px; }
-  .dato-unit { font-size: 10px; color: var(--text-sec); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
-  .dato-lbl { font-size: 11px; color: var(--crema-dim); line-height: 1.4; }
+  .frase-grande { font-family: 'Syne', sans-serif; font-size: clamp(17px, 3.5vw, 22px); font-weight: 700; color: var(--text); line-height: 1.4; letter-spacing: -0.01em; margin-bottom: 28px; padding-left: 18px; border-left: 3px solid var(--verde-light); }
 
-  /* TIMELINE CARD */
-  .tl-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 20px; padding: 28px; margin-bottom: 24px; position: relative; overflow: hidden; }
-  .tl-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--verde-dim), transparent); }
-  .tl-titulo { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-sec); margin-bottom: 24px; }
+  /* ── DATOS ── */
+  .datos-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .dato-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 18px 14px; text-align: center; }
+  .dato-num { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--verde); line-height: 1; margin-bottom: 4px; letter-spacing: -0.02em; }
+  .dato-unit { font-size: 10px; font-weight: 500; color: var(--text-ter); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+  .dato-lbl { font-size: 11px; color: var(--text-sec); line-height: 1.4; }
 
-  /* Anillo circular */
-  .anillo-layout { display: flex; align-items: center; gap: 32px; margin-bottom: 28px; }
-  .anillo-wrap { position: relative; width: 200px; height: 200px; flex-shrink: 0; }
-  .anillo-wrap svg { width: 200px; height: 200px; display: block; }
-  .anillo-centro { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; }
-  .anillo-num { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--verde-light); line-height: 1; }
-  .anillo-lbl { font-size: 10px; color: var(--text-sec); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; line-height: 1.3; }
+  /* ── TIMELINE ── */
+  .tl-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 16px; }
+  .tl-titulo { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-ter); margin-bottom: 24px; }
+
+  .anillo-layout { display: flex; align-items: center; gap: 28px; margin-bottom: 28px; }
+  .anillo-wrap { position: relative; width: 190px; height: 190px; flex-shrink: 0; }
+  .anillo-wrap svg { width: 190px; height: 190px; display: block; }
+  .anillo-centro { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; pointer-events: none; }
+  .anillo-num { font-family: 'Syne', sans-serif; font-size: 34px; font-weight: 800; color: var(--verde); line-height: 1; letter-spacing: -0.02em; }
+  .anillo-lbl { font-size: 10px; font-weight: 500; color: var(--text-ter); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; line-height: 1.3; }
 
   .anillo-leyenda { flex: 1; }
-  .anillo-leyenda-titulo { font-size: 11px; color: var(--text-sec); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .ley-titulo { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-ter); margin-bottom: 10px; }
   .ley-row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
   .ley-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
-  .ley-text { font-size: 12px; color: var(--crema-dim); }
-  .ley-mes { font-size: 12px; color: var(--verde-light); font-weight: 500; margin-left: auto; }
+  .ley-text { font-size: 12px; color: var(--text-sec); }
+  .ley-meses { font-size: 12px; font-weight: 500; color: var(--verde); margin-left: auto; }
+  .ley-nota { margin-top: 12px; font-size: 11px; color: var(--text-ter); font-style: italic; line-height: 1.5; }
 
-  /* Fases lineales */
-  .fases-wrap { position: relative; padding-top: 4px; }
-  .fases-linea { position: absolute; top: 18px; left: 18px; right: 18px; height: 1px; background: var(--card-border); }
+  .fases-wrap { position: relative; }
+  .fases-linea { position: absolute; top: 14px; left: 14px; right: 14px; height: 1px; background: var(--border); }
   .fases-row { display: flex; justify-content: space-between; position: relative; }
   .fase { flex: 1; text-align: center; }
-  .fase-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--verde); margin: 0 auto 8px; position: relative; z-index: 1; box-shadow: 0 0 10px rgba(124,184,74,0.5); }
-  .fase-nombre { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--verde-light); }
-  .fase-mes { font-size: 12px; color: var(--verde); margin-top: 2px; }
+  .fase-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--verde); margin: 0 auto 8px; position: relative; z-index: 1; }
+  .fase-nombre { font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-sec); }
+  .fase-mes { font-size: 12px; font-weight: 500; color: var(--verde); margin-top: 2px; }
 
-  /* Relacional */
-  .rel-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; margin-bottom: 24px; }
-  .rel-titulo { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-sec); margin-bottom: 14px; }
+  /* ── CARDS ── */
+  .sec-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 16px; }
+  .sec-titulo { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-ter); margin-bottom: 14px; }
+
   .rel-nodos { display: flex; flex-wrap: wrap; gap: 7px; }
-  .rel-nodo { background: var(--bg2); border: 1px solid var(--card-border); border-radius: 100px; padding: 5px 12px; font-size: 12px; color: var(--crema-dim); display: flex; align-items: center; gap: 6px; }
-  .rel-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--verde); flex-shrink: 0; }
+  .rel-nodo { background: var(--bg); border: 1px solid var(--border); border-radius: 100px; padding: 5px 12px; font-size: 12px; color: var(--text-sec); display: flex; align-items: center; gap: 6px; animation: popIn 0.25s ease both; }
+  .rel-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--verde-med); flex-shrink: 0; }
 
-  /* Origen */
-  .origen-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; margin-bottom: 24px; }
-  .origen-titulo { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-sec); margin-bottom: 10px; }
-  .origen-texto { font-size: 13px; color: var(--crema-dim); line-height: 1.7; }
-  .piso-badge { display: inline-block; margin-top: 10px; background: var(--verde-dim); border-radius: 6px; padding: 4px 10px; font-size: 11px; color: var(--verde-light); font-weight: 500; }
+  .origen-texto { font-size: 13px; color: var(--text-sec); line-height: 1.8; }
+  .piso-badge { display: inline-block; margin-top: 10px; background: var(--verde-pale); border: 1px solid var(--verde-light); border-radius: var(--radius-sm); padding: 4px 10px; font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--verde); letter-spacing: 0.04em; }
 
-  footer { margin-top: 60px; padding-top: 28px; border-top: 1px solid var(--card-border); text-align: center; }
-  .footer-logo { font-family: 'Playfair Display', serif; font-size: 13px; font-style: italic; color: var(--verde); margin-bottom: 4px; }
-  .footer-sub { font-size: 11px; color: var(--text-sec); }
+  /* ── FOOTER ── */
+  footer { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  .footer-logo { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--verde); letter-spacing: 0.04em; text-transform: uppercase; }
+  .footer-credito { font-size: 11px; color: var(--text-ter); text-align: right; }
 
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes popIn  { from { opacity:0; transform:scale(0.94); }     to { opacity:1; transform:scale(1); } }
 
   @media (max-width: 520px) {
     .datos-grid { grid-template-columns: 1fr 1fr; }
     .anillo-layout { flex-direction: column; gap: 20px; }
-    .anillo-wrap { width: 180px; height: 180px; }
-    .anillo-wrap svg { width: 180px; height: 180px; }
+    .anillo-wrap { width: 170px; height: 170px; }
+    .anillo-wrap svg { width: 170px; height: 170px; }
+    h1 { font-size: 40px; }
+    .nav-credito { display: none; }
   }
 </style>
 </head>
 <body>
 <div class="container">
 
+  <nav>
+    <a class="nav-back" href="index.html">← Inicio</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-current">El tiempo en tu plato</span>
+    <span class="nav-credito">Un proyecto de Habitante<br>y Camila Bustamante</span>
+  </nav>
+
   <header>
-    <div class="eyebrow">Existo en Relación · Habitante</div>
-    <h1>El <span>tiempo</span><br>en tu plato</h1>
-    <p class="subtitle">¿Cuánto tiempo viajó este producto desde que se sembró hasta llegar a tu mesa? Elige un alimento.</p>
+    <div class="eyebrow">Un proyecto de Habitante y Camila Bustamante</div>
+    <h1>EL <em>TIEMPO</em><br>EN TU PLATO</h1>
+    <p class="subtitle">¿Cuánto tiempo viajó este producto desde que se sembró hasta llegar a tu mesa? Elige un alimento y descubre su historia temporal.</p>
   </header>
 
   <div class="selector-wrap">
@@ -124,37 +141,23 @@
 
   <div id="resultado">
     <div class="frase-grande" id="fraseGrande"></div>
-
     <div class="datos-grid">
-      <div class="dato-card">
-        <div class="dato-num" id="datoMeses">—</div>
-        <div class="dato-unit">meses</div>
-        <div class="dato-lbl">desde siembra hasta cosecha</div>
-      </div>
-      <div class="dato-card">
-        <div class="dato-num" id="datoAlt">—</div>
-        <div class="dato-unit">msnm máx.</div>
-        <div class="dato-lbl">altitud de cultivo</div>
-      </div>
-      <div class="dato-card">
-        <div class="dato-num" id="datoTemp">—</div>
-        <div class="dato-unit">meses</div>
-        <div class="dato-lbl">en temporada al año</div>
-      </div>
+      <div class="dato-card"><div class="dato-num" id="datoMeses">—</div><div class="dato-unit">meses</div><div class="dato-lbl">desde siembra hasta cosecha</div></div>
+      <div class="dato-card"><div class="dato-num" id="datoAlt">—</div><div class="dato-unit">msnm máx.</div><div class="dato-lbl">altitud de cultivo</div></div>
+      <div class="dato-card"><div class="dato-num" id="datoTemp">—</div><div class="dato-unit">meses</div><div class="dato-lbl">en temporada al año</div></div>
     </div>
-
     <div class="tl-card">
       <div class="tl-titulo">Ciclo anual — siembra → cosecha</div>
       <div class="anillo-layout">
         <div class="anillo-wrap">
-          <svg id="anilloSVG" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"></svg>
+          <svg id="anilloSVG" viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg"></svg>
           <div class="anillo-centro">
             <div class="anillo-num" id="anilloNum">—</div>
             <div class="anillo-lbl">meses<br>cultivo</div>
           </div>
         </div>
         <div class="anillo-leyenda">
-          <div class="anillo-leyenda-titulo">Meses de cosecha</div>
+          <div class="ley-titulo">Meses de cosecha</div>
           <div id="leyendaMeses"></div>
         </div>
       </div>
@@ -163,14 +166,12 @@
         <div class="fases-row" id="fasesRow"></div>
       </div>
     </div>
-
-    <div class="rel-card">
-      <div class="rel-titulo">Este producto existe en relación con</div>
+    <div class="sec-card">
+      <div class="sec-titulo">Existe en relación con</div>
       <div class="rel-nodos" id="relNodos"></div>
     </div>
-
-    <div class="origen-card">
-      <div class="origen-titulo">Origen y territorio</div>
+    <div class="sec-card">
+      <div class="sec-titulo">Origen y territorio</div>
       <div class="origen-texto" id="origenTexto"></div>
       <div class="piso-badge" id="pisoBadge"></div>
     </div>
@@ -178,155 +179,33 @@
 
   <footer>
     <div class="footer-logo">Existo en Relación</div>
-    <div class="footer-sub">Cartografía del tiempo y el territorio en los alimentos peruanos · Habitante, 2026</div>
+    <div class="footer-credito">Un proyecto de Habitante<br>y Camila Bustamante · Lima, 2026</div>
   </footer>
 
 </div>
 <script>
 const MESES_S = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-
-const COLORES_EJE = {
-  frutas:   '#C45A35',
-  verduras: '#4A7A22',
-  granos:   '#C97B1A',
-  raices:   '#1A5A8B',
-};
+const COLORES_EJE = { frutas:'#C45A35', verduras:'#4A7A22', granos:'#C97B1A', raices:'#1A5A8B' };
 
 const PRODUCTOS = [
-  // FRUTAS
-  { nombre:'Lúcuma', eje:'frutas',
-    siembra:8, cosecha:1, duracion:5,
-    tempInicio:1, tempFin:4, tempMeses:4, cruza:false,
-    altitud:'100–2 500', altMax:'2500',
-    frase:'"La lúcuma espera." Madura fuera del árbol hasta 7 días después de la cosecha.',
-    origen:'Cultivada desde tiempos preincas en valles interandinos de Ayacucho, Cajamarca y Lima. Variedades: Sede, Molle, Beltrán.',
-    piso:'Yunga / Quechua',
-    relaciones:['Valles interandinos','Suelo arcilloso','Temporada cálida','Manos cosechadoras','500–1500 msnm óptimo'] },
-
-  { nombre:'Aguaymanto', eje:'frutas',
-    siembra:9, cosecha:12, duracion:3,
-    tempInicio:12, tempFin:3, tempMeses:4, cruza:true,
-    altitud:'800–3 600', altMax:'3600',
-    frase:'"El aguaymanto mide la luz." Su floración responde a más de 12 horas de sol al día.',
-    origen:'Originario de los Andes peruanos. Presente en Cajamarca, Cusco, Puno y Huánuco. Único en su género en el Perú.',
-    piso:'Quechua / Suni',
-    relaciones:['Fotoperiodo (12+ h sol)','Lluvias de verano','Suelos andinos','Comunidades serranas','Temperatura fresca'] },
-
-  { nombre:'Chirimoya', eje:'frutas',
-    siembra:9, cosecha:3, duracion:6,
-    tempInicio:3, tempFin:6, tempMeses:4, cruza:false,
-    altitud:'800–2 200', altMax:'2200',
-    frase:'"La chirimoya no se apura." Madura fuera del árbol con manejo cuidadoso.',
-    origen:'Originaria de los valles interandinos del norte peruano: Cajamarca, Amazonas y La Libertad.',
-    piso:'Yunga / Quechua',
-    relaciones:['Valles secos del norte','Temperatura fresca','Suelo profundo','Manos expertas en poscosecha'] },
-
-  { nombre:'Palta', eje:'frutas',
-    siembra:10, cosecha:4, duracion:6,
-    tempInicio:4, tempFin:9, tempMeses:6, cruza:false,
-    altitud:'0–2 500', altMax:'2500',
-    frase:'"La palta toma su tiempo." Puede permanecer en el árbol meses sin madurar — el árbol es su bodega.',
-    origen:'Perú es el segundo exportador mundial de palta. Principales zonas: La Libertad, Ica y Lima. Variedad Hass domina la exportación.',
-    piso:'Chala / Yunga / Quechua',
-    relaciones:['Suelo bien drenado','Riego tecnificado','Brisa marina','Temperatura estable','Mercado global'] },
-
-  { nombre:'Cacao', eje:'frutas',
-    siembra:10, cosecha:4, duracion:6,
-    tempInicio:4, tempFin:8, tempMeses:5, cruza:false,
-    altitud:'0–900', altMax:'900',
-    frase:'"El cacao necesita sombra." Crece bajo el dosel del bosque — la selva es su techo.',
-    origen:'Perú posee el 60% del cacao fino de aroma del mundo. San Martín, Cusco y Ucayali son sus principales regiones. Theobroma = alimento de los dioses.',
-    piso:'Selva alta',
-    relaciones:['Dosel del bosque','Sombra y humedad','Suelo amazónico','Temperatura 24–28°C','Fermentación artesanal','Comunidades nativas'] },
-
-  // VERDURAS
-  { nombre:'Maíz', eje:'verduras',
-    siembra:10, cosecha:4, duracion:6,
-    tempInicio:4, tempFin:5, tempMeses:2, cruza:false,
-    altitud:'500–3 500', altMax:'3500',
-    frase:'"El maíz sincroniza civilizaciones." Su ciclo marcó calendarios agrícolas andinos durante milenios.',
-    origen:'Perú es centro de diversidad mundial con 52 razas documentadas. Siembra con el inicio de lluvias (oct–nov), cosecha con su fin (abr–may).',
-    piso:'Quechua / Suni',
-    relaciones:['Inicio de lluvias','Fin de lluvias','Sol andino','Suelo fértil de ladera','Comunidades serranas','Calendario agrícola'] },
-
-  { nombre:'Tomate', eje:'verduras',
-    siembra:9, cosecha:12, duracion:3,
-    tempInicio:12, tempFin:6, tempMeses:7, cruza:true,
-    altitud:'0–2 000', altMax:'2000',
-    frase:'"El tomate mide eficiencia." Madura en 4 semanas a 25°C — y en 8 semanas a 15°C.',
-    origen:'Perú posee parentales silvestres en la costa central. Producción continua en costa con picos en verano y otoño.',
-    piso:'Chala / Quechua',
-    relaciones:['Temperatura (eficiencia)','Riego por goteo','Suelo arenoso costero','Sol constante','Mercado interno'] },
-
-  { nombre:'Lechuga', eje:'verduras',
-    siembra:1, cosecha:3, duracion:2,
-    tempInicio:1, tempFin:12, tempMeses:12, cruza:false,
-    altitud:'0–3 000', altMax:'3000',
-    frase:'"La lechuga no espera." Ciclo de solo 60–90 días — acelera con el calor.',
-    origen:'Adaptada en Perú desde hace siglos. Su ciclo corto permite producción escalonada durante todo el año.',
-    piso:'Todo el territorio',
-    relaciones:['Ciclo corto (60–90 días)','Agua constante','Temperatura templada','Producción escalonada','Mercados urbanos'] },
-
-  { nombre:'Espinaca', eje:'verduras',
-    siembra:2, cosecha:4, duracion:2,
-    tempInicio:4, tempFin:9, tempMeses:6, cruza:false,
-    altitud:'0–3 000', altMax:'3000',
-    frase:'"La espinaca mide el frío." Se espiga prematuramente al superar los 25°C.',
-    origen:'Adaptada a valles peruanos. Mejor en estación fresca: otoño-invierno entre abril y septiembre.',
-    piso:'Chala / Quechua',
-    relaciones:['Frío estacional','Suelo rico en nitrógeno','Riego frecuente','Temperatura < 25°C'] },
-
-  // GRANOS
-  { nombre:'Quinua', eje:'granos',
-    siembra:9, cosecha:4, duracion:7,
-    tempInicio:4, tempFin:6, tempMeses:3, cruza:false,
-    altitud:'2 800–4 200', altMax:'4200',
-    frase:'"La quinua mide el frío extremo." Soporta heladas hasta −8°C sin rendirse.',
-    origen:'Domesticada hace 5 000–7 000 años en el altiplano del lago Titicaca. Perú tiene más de 3 000 variedades. Proteína completa: 9 aminoácidos esenciales.',
-    piso:'Puna / Suni',
-    relaciones:['Altiplano > 3 800 msnm','Heladas nocturnas','Lago Titicaca','Suelo poco fértil','Radiación UV extrema','Comunidades aimaras y quechuas'] },
-
-  { nombre:'Kiwicha', eje:'granos',
-    siembra:10, cosecha:3, duracion:5,
-    tempInicio:3, tempFin:6, tempMeses:4, cruza:false,
-    altitud:'1 000–3 200', altMax:'3200',
-    frase:'"La kiwicha mide la altitud media." Florece solo con días cortos — fotoperiodismo.',
-    origen:'Domesticada en los Andes hace 4 000–6 000 años. 16–18% proteína, alta en lisina.',
-    piso:'Quechua / Suni',
-    relaciones:['Días cortos de invierno','Altitud media andina','Suelo andino','Sol temperado','Tradición prehispánica'] },
-
-  // RAÍCES
-  { nombre:'Papa', eje:'raices',
-    siembra:10, cosecha:1, duracion:3,
-    tempInicio:1, tempFin:6, tempMeses:6, cruza:false,
-    altitud:'100–4 200', altMax:'4200',
-    frase:'"La papa es el tiempo." El chuño es tiempo congelado — tecnología andina de 4 000 años.',
-    origen:'Perú es el principal centro de origen mundial (7 000–10 000 años). Más de 4 000 variedades nativas. 711 313 familias productoras, 90% en sierra.',
-    piso:'Quechua / Puna',
-    relaciones:['Heladas nocturnas (chuño)','Suelo de ladera','Lluvia serrana','711 000 familias campesinas','Altiplano andino','Agua de deshielo'] },
-
-  { nombre:'Camote', eje:'raices',
-    siembra:1, cosecha:5, duracion:5,
-    tempInicio:1, tempFin:12, tempMeses:12, cruza:false,
-    altitud:'0–2 500', altMax:'2500',
-    frase:'"El camote viaja." Cruzó el Océano Pacífico precolombinamente — hallado en Polinesia.',
-    origen:'Domesticado en América tropical. Evidencias arqueológicas en Perú desde 2500 a.C. Variedad morada: alta en antioxidantes.',
-    piso:'Chala / Quechua',
-    relaciones:['Suelo arenoso','Calor','Resistencia a sequía','Rutas marítimas precolombinas','Costa y valle'] },
-
-  { nombre:'Oca', eje:'raices',
-    siembra:11, cosecha:5, duracion:6,
-    tempInicio:5, tempFin:7, tempMeses:3, cruza:false,
-    altitud:'3 000–4 100', altMax:'4100',
-    frase:'"La oca dulcifica con el sol." Necesita 1 a 2 semanas expuesta al sol poscosecha para transformar su sabor.',
-    origen:'Domesticada en los altos Andes. Segundo tubérculo andino más importante tras la papa.',
-    piso:'Puna',
-    relaciones:['Altitud > 3 000 msnm','Sol poscosecha','Frío extremo','Suelo volcánico','Paciencia campesina','Tiempo de transformación'] },
+  { nombre:'Lúcuma',     eje:'frutas',   siembra:8,  cosecha:1,  duracion:5, tempInicio:1,  tempFin:4,  tempMeses:4,  cruza:false, altitud:'100–2 500', altMax:'2500',  frase:'"La lúcuma espera." Madura fuera del árbol hasta 7 días después de la cosecha.',                              origen:'Cultivada desde tiempos preincas en valles interandinos de Ayacucho, Cajamarca y Lima.',   piso:'Yunga / Quechua',       relaciones:['Valles interandinos','Suelo arcilloso','Temporada cálida','Manos cosechadoras','500–1500 msnm óptimo'] },
+  { nombre:'Aguaymanto', eje:'frutas',   siembra:9,  cosecha:12, duracion:3, tempInicio:12, tempFin:3,  tempMeses:4,  cruza:true,  altitud:'800–3 600', altMax:'3600',  frase:'"El aguaymanto mide la luz." Su floración responde a más de 12 horas de sol al día.',                        origen:'Originario de los Andes peruanos. Cajamarca, Cusco, Puno y Huánuco.',              piso:'Quechua / Suni',        relaciones:['Fotoperiodo (12+ h sol)','Lluvias de verano','Suelos andinos','Comunidades serranas'] },
+  { nombre:'Chirimoya',  eje:'frutas',   siembra:9,  cosecha:3,  duracion:6, tempInicio:3,  tempFin:6,  tempMeses:4,  cruza:false, altitud:'800–2 200', altMax:'2200',  frase:'"La chirimoya no se apura." Madura fuera del árbol con manejo cuidadoso.',                                  origen:'Originaria de los valles interandinos del norte peruano: Cajamarca, Amazonas y La Libertad.', piso:'Yunga / Quechua',  relaciones:['Valles secos del norte','Temperatura fresca','Suelo profundo','Manos expertas'] },
+  { nombre:'Palta',      eje:'frutas',   siembra:10, cosecha:4,  duracion:6, tempInicio:4,  tempFin:9,  tempMeses:6,  cruza:false, altitud:'0–2 500',   altMax:'2500',  frase:'"La palta toma su tiempo." Puede permanecer en el árbol meses sin madurar — el árbol es su bodega.',       origen:'Perú es el segundo exportador mundial. Zonas: La Libertad, Ica y Lima.',           piso:'Chala / Yunga / Quechua', relaciones:['Suelo bien drenado','Riego tecnificado','Brisa marina','Temperatura estable','Mercado global'] },
+  { nombre:'Cacao',      eje:'frutas',   siembra:10, cosecha:4,  duracion:6, tempInicio:4,  tempFin:8,  tempMeses:5,  cruza:false, altitud:'0–900',     altMax:'900',   frase:'"El cacao necesita sombra." Crece bajo el dosel del bosque — la selva es su techo.',                        origen:'Perú posee el 60% del cacao fino de aroma del mundo. San Martín, Cusco y Ucayali.', piso:'Selva alta',           relaciones:['Dosel del bosque','Sombra y humedad','Suelo amazónico','Temperatura 24–28°C','Fermentación artesanal'] },
+  { nombre:'Maíz',       eje:'verduras', siembra:10, cosecha:4,  duracion:6, tempInicio:4,  tempFin:5,  tempMeses:2,  cruza:false, altitud:'500–3 500', altMax:'3500',  frase:'"El maíz sincroniza civilizaciones." Su ciclo marcó calendarios agrícolas andinos durante milenios.',      origen:'Perú: centro de diversidad mundial con 52 razas documentadas.',                    piso:'Quechua / Suni',        relaciones:['Inicio de lluvias','Fin de lluvias','Sol andino','Suelo fértil de ladera','Calendario agrícola'] },
+  { nombre:'Tomate',     eje:'verduras', siembra:9,  cosecha:12, duracion:3, tempInicio:12, tempFin:6,  tempMeses:7,  cruza:true,  altitud:'0–2 000',   altMax:'2000',  frase:'"El tomate mide eficiencia." Madura en 4 semanas a 25°C — y en 8 semanas a 15°C.',                         origen:'Perú posee parentales silvestres en la costa central.',                             piso:'Chala / Quechua',       relaciones:['Temperatura (eficiencia)','Riego por goteo','Suelo arenoso costero','Sol constante'] },
+  { nombre:'Lechuga',    eje:'verduras', siembra:1,  cosecha:3,  duracion:2, tempInicio:1,  tempFin:12, tempMeses:12, cruza:false, altitud:'0–3 000',   altMax:'3000',  frase:'"La lechuga no espera." Ciclo de solo 60–90 días — disponible todo el año.',                               origen:'Adaptada en Perú desde hace siglos. Su ciclo corto permite producción escalonada.', piso:'Todo el territorio',    relaciones:['Ciclo corto (60–90 días)','Agua constante','Temperatura templada','Producción escalonada'] },
+  { nombre:'Espinaca',   eje:'verduras', siembra:2,  cosecha:4,  duracion:2, tempInicio:4,  tempFin:9,  tempMeses:6,  cruza:false, altitud:'0–3 000',   altMax:'3000',  frase:'"La espinaca mide el frío." Se espiga prematuramente al superar los 25°C.',                               origen:'Adaptada a valles peruanos. Mejor en estación fresca: abril a septiembre.',        piso:'Chala / Quechua',       relaciones:['Frío estacional','Suelo rico en nitrógeno','Riego frecuente','Temperatura < 25°C'] },
+  { nombre:'Quinua',     eje:'granos',   siembra:9,  cosecha:4,  duracion:7, tempInicio:4,  tempFin:6,  tempMeses:3,  cruza:false, altitud:'2 800–4 200',altMax:'4200',  frase:'"La quinua mide el frío extremo." Soporta heladas hasta −8°C sin rendirse.',                              origen:'Domesticada hace 5 000–7 000 años en el altiplano del lago Titicaca. 3 000+ variedades.', piso:'Puna / Suni',    relaciones:['Altiplano > 3 800 msnm','Heladas nocturnas','Lago Titicaca','Suelo poco fértil','Radiación UV extrema'] },
+  { nombre:'Kiwicha',    eje:'granos',   siembra:10, cosecha:3,  duracion:5, tempInicio:3,  tempFin:6,  tempMeses:4,  cruza:false, altitud:'1 000–3 200',altMax:'3200',  frase:'"La kiwicha mide la altitud media." Florece solo con días cortos — fotoperiodismo.',                      origen:'Domesticada en los Andes hace 4 000–6 000 años. 16–18% proteína, alta en lisina.', piso:'Quechua / Suni',        relaciones:['Días cortos de invierno','Altitud media andina','Suelo andino','Tradición prehispánica'] },
+  { nombre:'Papa',       eje:'raices',   siembra:10, cosecha:1,  duracion:3, tempInicio:1,  tempFin:6,  tempMeses:6,  cruza:false, altitud:'100–4 200', altMax:'4200',  frase:'"La papa es el tiempo." El chuño es tiempo congelado — tecnología andina de 4 000 años.',                  origen:'Perú: principal centro de origen mundial (7 000–10 000 años). 4 000+ variedades.', piso:'Quechua / Puna',        relaciones:['Heladas nocturnas (chuño)','Suelo de ladera','Lluvia serrana','711 000 familias campesinas','Agua de deshielo'] },
+  { nombre:'Camote',     eje:'raices',   siembra:1,  cosecha:5,  duracion:5, tempInicio:1,  tempFin:12, tempMeses:12, cruza:false, altitud:'0–2 500',   altMax:'2500',  frase:'"El camote viaja." Cruzó el Océano Pacífico precolombinamente — hallado en Polinesia.',                    origen:'Domesticado en América tropical. Evidencias arqueológicas en Perú desde 2500 a.C.', piso:'Chala / Quechua',      relaciones:['Suelo arenoso','Calor','Resistencia a sequía','Rutas marítimas precolombinas'] },
+  { nombre:'Oca',        eje:'raices',   siembra:11, cosecha:5,  duracion:6, tempInicio:5,  tempFin:7,  tempMeses:3,  cruza:false, altitud:'3 000–4 100',altMax:'4100',  frase:'"La oca dulcifica con el sol." Necesita 1 a 2 semanas al sol poscosecha para transformar su sabor.',       origen:'Domesticada en los altos Andes. Segundo tubérculo andino más importante tras la papa.', piso:'Puna',            relaciones:['Altitud > 3 000 msnm','Sol poscosecha','Frío extremo','Suelo volcánico','Tiempo de transformación'] },
 ];
 
 let activo = null;
 
-// ── Botones ──────────────────────────────
 function renderBtns() {
   const wrap = document.getElementById('prodBtns');
   wrap.innerHTML = '';
@@ -341,125 +220,75 @@ function renderBtns() {
   });
 }
 
-// ── Anillo SVG ───────────────────────────
 function dibujarAnillo(p) {
   const svg = document.getElementById('anilloSVG');
-  const cx = 100, cy = 100, ro = 82, ri = 56;
+  const cx = 95, cy = 95, ro = 78, ri = 52;
   const color = COLORES_EJE[p.eje];
-  const GAP = 0.05; // rad gap entre segmentos
-
+  const GAP = 0.05;
   let paths = '';
-
   for (let i = 0; i < 12; i++) {
     const mes = i + 1;
-    const enCosecha = p.cruza
-      ? (mes >= p.tempInicio || mes <= p.tempFin)
+    const en = p.cruza ? (mes >= p.tempInicio || mes <= p.tempFin)
       : (p.tempInicio === 1 && p.tempFin === 12) || (mes >= p.tempInicio && mes <= p.tempFin);
-
     const a0 = (i / 12) * 2 * Math.PI - Math.PI / 2 + GAP;
     const a1 = ((i + 1) / 12) * 2 * Math.PI - Math.PI / 2 - GAP;
-    const fill = enCosecha ? color : '#2A3820';
-
+    const fill = en ? color : '#E8E3D0';
     const x1 = cx + ri * Math.cos(a0), y1 = cy + ri * Math.sin(a0);
     const x2 = cx + ro * Math.cos(a0), y2 = cy + ro * Math.sin(a0);
     const x3 = cx + ro * Math.cos(a1), y3 = cy + ro * Math.sin(a1);
     const x4 = cx + ri * Math.cos(a1), y4 = cy + ri * Math.sin(a1);
-
     paths += `<path d="M${x1.toFixed(2)},${y1.toFixed(2)} L${x2.toFixed(2)},${y2.toFixed(2)} A${ro},${ro} 0 0,1 ${x3.toFixed(2)},${y3.toFixed(2)} L${x4.toFixed(2)},${y4.toFixed(2)} A${ri},${ri} 0 0,0 ${x1.toFixed(2)},${y1.toFixed(2)} Z" fill="${fill}"/>`;
-
-    // Etiqueta mes
     const aMid = (a0 + a1) / 2;
-    const rLbl = ro + 12;
-    const lx = (cx + rLbl * Math.cos(aMid)).toFixed(1);
-    const ly = (cy + rLbl * Math.sin(aMid)).toFixed(1);
-    const lblColor = enCosecha ? '#A8D97A' : '#3A5028';
-    paths += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="central" fill="${lblColor}" font-size="8" font-family="Outfit,sans-serif" font-weight="500">${MESES_S[i]}</text>`;
+    const rLbl = ro + 11;
+    paths += `<text x="${(cx + rLbl * Math.cos(aMid)).toFixed(1)}" y="${(cy + rLbl * Math.sin(aMid)).toFixed(1)}" text-anchor="middle" dominant-baseline="central" fill="${en ? color : '#B8B0A0'}" font-size="7.5" font-family="DM Sans,sans-serif" font-weight="500">${MESES_S[i]}</text>`;
   }
-
   svg.innerHTML = paths;
 }
 
-// ── Leyenda meses cosecha ─────────────────
 function renderLeyenda(p) {
-  const el = document.getElementById('leyendaMeses');
-  el.innerHTML = '';
   const color = COLORES_EJE[p.eje];
-
-  // Calcular meses activos
   const activos = [];
   for (let i = 1; i <= 12; i++) {
-    const en = p.cruza
-      ? (i >= p.tempInicio || i <= p.tempFin)
+    const en = p.cruza ? (i >= p.tempInicio || i <= p.tempFin)
       : (p.tempInicio === 1 && p.tempFin === 12) || (i >= p.tempInicio && i <= p.tempFin);
     if (en) activos.push(MESES_S[i - 1]);
   }
-
-  const row = document.createElement('div');
-  row.className = 'ley-row';
-  row.innerHTML = `<div class="ley-dot" style="background:${color}"></div><div class="ley-text">En temporada</div><div class="ley-mes">${activos.join(' · ')}</div>`;
-  el.appendChild(row);
-
-  const row2 = document.createElement('div');
-  row2.className = 'ley-row';
-  row2.innerHTML = `<div class="ley-dot" style="background:#2A3820;border:1px solid #3A5028"></div><div class="ley-text">Fuera de temporada</div>`;
-  el.appendChild(row2);
-
-  const row3 = document.createElement('div');
-  row3.style.cssText = 'margin-top:12px;font-size:11px;color:#8A9880;line-height:1.5;';
-  row3.textContent = p.tempMeses === 12
-    ? 'Disponible todo el año.'
-    : `${p.tempMeses} ${p.tempMeses === 1 ? 'mes' : 'meses'} al año en temporada.`;
-  el.appendChild(row3);
+  document.getElementById('leyendaMeses').innerHTML = `
+    <div class="ley-row"><div class="ley-dot" style="background:${color}"></div><div class="ley-text">En temporada</div><div class="ley-meses">${activos.join(' · ')}</div></div>
+    <div class="ley-row"><div class="ley-dot" style="background:#E8E3D0;border:1px solid #B8B0A0"></div><div class="ley-text">Fuera de temporada</div></div>
+    <div class="ley-nota">${p.tempMeses === 12 ? 'Disponible todo el año.' : p.tempMeses + ' meses al año en temporada.'}</div>`;
 }
 
-// ── Fases ─────────────────────────────────
 function renderFases(p) {
-  const el = document.getElementById('fasesRow');
-  const fases = [
-    { n: 'Siembra',     m: MESES_S[p.siembra - 1] },
-    { n: 'Cultivo',     m: p.duracion + ' m' },
-    { n: 'Cosecha',     m: MESES_S[p.cosecha - 1] },
-    { n: 'Tu mesa',     m: '→' },
-  ];
-  el.innerHTML = fases.map(f => `
-    <div class="fase">
-      <div class="fase-dot"></div>
-      <div class="fase-nombre">${f.n}</div>
-      <div class="fase-mes">${f.m}</div>
-    </div>
-  `).join('');
+  document.getElementById('fasesRow').innerHTML = [
+    { n:'Siembra', m: MESES_S[p.siembra - 1] },
+    { n:'Cultivo',  m: p.duracion + ' m' },
+    { n:'Cosecha',  m: MESES_S[p.cosecha - 1] },
+    { n:'Tu mesa',  m: '→' },
+  ].map(f => `<div class="fase"><div class="fase-dot"></div><div class="fase-nombre">${f.n}</div><div class="fase-mes">${f.m}</div></div>`).join('');
 }
 
-// ── Mostrar producto ──────────────────────
 function mostrar(p) {
   activo = p;
   renderBtns();
-
   document.getElementById('fraseGrande').textContent = p.frase;
   document.getElementById('datoMeses').textContent = p.duracion;
   document.getElementById('datoAlt').textContent = parseInt(p.altMax).toLocaleString('es');
   document.getElementById('datoTemp').textContent = p.tempMeses;
   document.getElementById('anilloNum').textContent = p.duracion;
-
   dibujarAnillo(p);
   renderLeyenda(p);
   renderFases(p);
-
-  // Nodos relacionales
-  const nodos = document.getElementById('relNodos');
-  nodos.innerHTML = p.relaciones.map((r, i) =>
-    `<div class="rel-nodo" style="animation:fadeUp 0.3s ${i*0.05}s ease both"><div class="rel-dot"></div>${r}</div>`
-  ).join('');
-
+  document.getElementById('relNodos').innerHTML = p.relaciones.map((r, i) =>
+    `<div class="rel-nodo" style="animation-delay:${i*0.05}s"><div class="rel-dot"></div>${r}</div>`).join('');
   document.getElementById('origenTexto').textContent = p.origen;
   document.getElementById('pisoBadge').textContent = '↑ ' + p.piso + ' · ' + p.altitud + ' msnm';
-
   const res = document.getElementById('resultado');
   res.style.display = 'block';
   res.style.animation = 'none';
   void res.offsetWidth;
-  res.style.animation = 'fadeUp 0.5s ease both';
-  setTimeout(() => res.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  res.style.animation = 'fadeUp 0.4s ease both';
+  setTimeout(() => res.scrollIntoView({ behavior:'smooth', block:'start' }), 50);
 }
 
 renderBtns();

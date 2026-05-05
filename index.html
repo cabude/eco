@@ -3,335 +3,172 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Existo en Relación — Habitante</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Existo en Relación — Habitante y Camila Bustamante</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F4F0E6;
-    --crema: #EDE8D8;
-    --crema-dark: #D8D2BE;
-    --verde: #2D5016;
-    --verde-med: #4A7A22;
+    --bg:          #F5F1E6;
+    --bg2:         #EDE8D6;
+    --border:      #D8D2BE;
+    --border-dark: #B8B0A0;
+    --verde:       #2D5016;
+    --verde-med:   #4A7A22;
     --verde-light: #C0DD97;
-    --terra: #8B3A1F;
-    --text: #1A1A12;
-    --text-sec: #6A6A52;
-    --text-ter: #A0A082;
+    --verde-pale:  #EAF3DE;
+    --terra:       #8B3A1F;
+    --text:        #1A1A12;
+    --text-sec:    #5A5A48;
+    --text-ter:    #9A9A82;
+    --white:       #FFFFFF;
+    --radius-sm:   8px;
+    --radius-md:   14px;
+    --radius-lg:   20px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 660px; margin: 0 auto; padding: 0 24px 96px; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Outfit', sans-serif;
-    min-height: 100vh;
+  /* ── NAV ── */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 60px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800;
+    letter-spacing: 0.04em; color: var(--verde); text-decoration: none;
+    text-transform: uppercase;
+  }
+  .nav-credito {
+    font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 400;
+    color: var(--text-ter); letter-spacing: 0.04em; text-align: right;
   }
 
-  /* Textura de fondo */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image:
-      radial-gradient(circle at 20% 80%, rgba(45,80,22,0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(139,58,31,0.04) 0%, transparent 50%);
-    pointer-events: none;
-  }
-
-  .container {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 64px 24px 80px;
-    position: relative;
-  }
-
-  /* HEADER */
-  header {
-    margin-bottom: 64px;
-    animation: fadeUp 0.7s ease both;
-  }
-
+  /* ── HEADER ── */
+  header { margin-bottom: 64px; animation: fadeUp 0.5s 0.05s ease both; }
   .eyebrow {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--verde-med);
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--verde-med); margin-bottom: 20px;
   }
-
-  .eyebrow::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--crema-dark);
-  }
-
   h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(42px, 9vw, 72px);
-    font-weight: 300;
-    line-height: 1.0;
-    color: var(--verde);
-    margin-bottom: 10px;
+    font-family: 'Syne', sans-serif; font-size: clamp(48px, 10vw, 80px);
+    font-weight: 800; line-height: 0.95; letter-spacing: -0.02em;
+    color: var(--text); margin-bottom: 24px;
   }
-
-  h1 em {
-    font-style: italic;
-    color: var(--terra);
-  }
-
-  .tagline {
-    font-size: 14px;
-    color: var(--text-sec);
-    line-height: 1.7;
-    max-width: 420px;
-    margin-top: 16px;
-  }
-
+  h1 em { font-style: normal; color: var(--verde); }
+  .tagline { font-size: 15px; color: var(--text-sec); line-height: 1.7; max-width: 440px; margin-bottom: 24px; }
   .epigrafe {
-    margin-top: 24px;
-    padding-left: 16px;
-    border-left: 2px solid var(--verde-light);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 15px;
-    font-style: italic;
-    color: var(--text-sec);
-    line-height: 1.6;
+    padding-left: 16px; border-left: 2px solid var(--verde-light);
+    font-size: 13px; font-style: italic; color: var(--text-ter); line-height: 1.6;
   }
 
-  /* SECCIÓN HERRAMIENTAS */
+  /* ── CARDS ── */
   .seccion-label {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--text-ter);
-    margin-bottom: 20px;
-    animation: fadeUp 0.7s 0.15s ease both;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-ter);
+    margin-bottom: 14px; animation: fadeUp 0.5s 0.1s ease both;
   }
-
-  .cards {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 48px;
-  }
-
+  .cards { display: flex; flex-direction: column; gap: 10px; margin-bottom: 56px; }
   .card {
-    display: block;
-    text-decoration: none;
-    background: white;
-    border: 1px solid var(--crema-dark);
-    border-radius: 16px;
-    padding: 24px 28px;
-    transition: all 0.25s;
-    position: relative;
-    overflow: hidden;
-    animation: fadeUp 0.6s ease both;
+    display: block; text-decoration: none; background: var(--white);
+    border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 22px 24px; transition: all 0.22s; position: relative;
+    overflow: hidden; animation: fadeUp 0.5s ease both;
   }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; bottom: 0;
-    width: 3px;
-    border-radius: 16px 0 0 16px;
-    transition: width 0.25s;
+  .card::after {
+    content: '→'; position: absolute; right: 24px; top: 50%;
+    transform: translateY(-50%) translateX(6px);
+    font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700;
+    opacity: 0; transition: all 0.22s;
   }
-
-  .card:hover {
-    border-color: transparent;
-    box-shadow: 0 8px 32px rgba(45,80,22,0.12);
-    transform: translateY(-2px);
-  }
-
-  .card:hover::before { width: 5px; }
-
-  .card-inner {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
+  .card:hover { border-color: var(--verde-med); box-shadow: 0 4px 24px rgba(45,80,22,0.10); transform: translateY(-2px); }
+  .card:hover::after { opacity: 1; transform: translateY(-50%) translateX(0); }
+  .card-inner { display: flex; align-items: center; gap: 18px; }
   .card-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 32px;
-    font-weight: 300;
-    line-height: 1;
-    flex-shrink: 0;
-    width: 40px;
-    text-align: right;
-    transition: transform 0.25s;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; color: var(--text-ter); width: 28px; flex-shrink: 0;
   }
-
-  .card:hover .card-num { transform: scale(1.15); }
-
-  .card-sep { width: 1px; height: 40px; background: var(--crema-dark); flex-shrink: 0; }
-
-  .card-content { flex: 1; }
-
+  .card-sep { width: 1px; height: 36px; background: var(--border); flex-shrink: 0; }
+  .card-content { flex: 1; padding-right: 28px; }
   .card-titulo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 1.2;
-    margin-bottom: 5px;
-    transition: color 0.2s;
+    font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700;
+    color: var(--text); margin-bottom: 3px; letter-spacing: -0.01em; transition: color 0.2s;
   }
+  .card:hover .card-titulo { color: var(--verde); }
+  .card-desc { font-size: 13px; color: var(--text-sec); line-height: 1.5; }
 
-  .card-desc {
-    font-size: 13px;
-    color: var(--text-sec);
-    line-height: 1.5;
-  }
-
-  .card-arrow {
-    font-size: 18px;
-    flex-shrink: 0;
-    opacity: 0;
-    transform: translateX(-8px);
-    transition: all 0.25s;
-  }
-
-  .card:hover .card-arrow {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  /* Colores por tarjeta */
-  .card-1::before { background: #4A7A22; }
-  .card-1 .card-num { color: #4A7A22; }
-  .card-1 .card-titulo { color: #2D5016; }
-  .card-1 .card-arrow { color: #4A7A22; }
-  .card-1:hover { background: #F6FBF0; }
-
-  .card-2::before { background: #0E5A8A; }
-  .card-2 .card-num { color: #0E5A8A; }
-  .card-2 .card-titulo { color: #0A3A5A; }
-  .card-2 .card-arrow { color: #0E5A8A; }
-  .card-2:hover { background: #F0F6FB; }
-
-  .card-3::before { background: #8B3A1F; }
-  .card-3 .card-num { color: #8B3A1F; }
-  .card-3 .card-titulo { color: #6A2A12; }
-  .card-3 .card-arrow { color: #8B3A1F; }
-  .card-3:hover { background: #FBF4F0; }
-
-  .card-4::before { background: #5A3A8A; }
+  .card-1 .card-num { color: var(--verde-med); }
+  .card-2 .card-num { color: #1A5A8B; }
+  .card-3 .card-num { color: var(--terra); }
   .card-4 .card-num { color: #5A3A8A; }
-  .card-4 .card-titulo { color: #3A1A6A; }
-  .card-4 .card-arrow { color: #5A3A8A; }
-  .card-4:hover { background: #F6F0FB; }
 
-  /* SEPARADOR */
-  .sep {
-    height: 1px;
-    background: var(--crema-dark);
-    margin: 40px 0;
-    animation: fadeUp 0.6s 0.5s ease both;
-  }
+  /* ── SOBRE ── */
+  .sep { height: 1px; background: var(--border); margin: 48px 0; animation: fadeUp 0.5s 0.4s ease both; }
+  .sobre { animation: fadeUp 0.5s 0.45s ease both; }
+  .sobre-titulo { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 10px; letter-spacing: -0.01em; }
+  .sobre-texto { font-size: 13px; color: var(--text-sec); line-height: 1.8; }
 
-  /* SOBRE EL PROYECTO */
-  .sobre {
-    animation: fadeUp 0.6s 0.55s ease both;
-  }
-
-  .sobre-titulo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--text);
-    margin-bottom: 12px;
-  }
-
-  .sobre-texto {
-    font-size: 13px;
-    color: var(--text-sec);
-    line-height: 1.8;
-    max-width: 500px;
-  }
-
-  /* FOOTER */
+  /* ── FOOTER ── */
   footer {
-    margin-top: 60px;
-    padding-top: 28px;
-    border-top: 1px solid var(--crema-dark);
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-    animation: fadeUp 0.6s 0.6s ease both;
+    margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 8px; animation: fadeUp 0.5s 0.5s ease both;
   }
+  .footer-logo { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--verde); letter-spacing: 0.04em; text-transform: uppercase; }
+  .footer-credito { font-size: 11px; color: var(--text-ter); text-align: right; }
 
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
-    font-style: italic;
-    color: var(--verde);
-  }
-
-  .footer-sub {
-    font-size: 11px;
-    color: var(--text-ter);
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
 
   @media (max-width: 480px) {
-    h1 { font-size: 48px; }
-    .card-inner { gap: 14px; }
-    .card-num { font-size: 26px; width: 30px; }
-    footer { flex-direction: column; }
+    h1 { font-size: 52px; }
+    .card-desc { display: none; }
+    .nav-credito { display: none; }
   }
 </style>
 </head>
 <body>
 <div class="container">
 
+  <nav>
+    <a class="nav-logo" href="index.html">Existo en Relación</a>
+    <span class="nav-credito">Un proyecto de Habitante<br>y Camila Bustamante</span>
+  </nav>
+
   <header>
-    <div class="eyebrow">Habitante · 2026</div>
-    <h1>Existo<br>en <em>relación</em></h1>
-    <p class="tagline">Cartografía del tiempo y el territorio en los alimentos peruanos. Cuatro herramientas para explorar la relacionalidad andino-amazónica.</p>
+    <div class="eyebrow">Un proyecto de Habitante y Camila Bustamante</div>
+    <h1>EXISTO<br>EN <em>RELACIÓN</em></h1>
+    <p class="tagline">En las culturas andino-amazónicas la existencia es relación ininterrumpida. Cada alimento peruano existe en relación con su territorio, su altitud, su ciclo solar y las manos que lo cultivan.</p>
     <blockquote class="epigrafe">"En la relacionalidad radica la posibilidad de devenir 'ente', de ser, de existir" — Cussiánovich, 2010b</blockquote>
   </header>
 
-  <div class="seccion-label">Explora las herramientas</div>
+  <div class="seccion-label">Cuatro herramientas</div>
 
   <div class="cards">
-
-    <a class="card card-1" href="plato-hoy.html" style="animation-delay:0.2s">
+    <a class="card card-1" href="plato-hoy.html" style="animation-delay:0.15s">
       <div class="card-inner">
         <div class="card-num">01</div>
         <div class="card-sep"></div>
         <div class="card-content">
           <div class="card-titulo">¿Qué hay en tu plato hoy?</div>
-          <div class="card-desc">Elige un mes y descubre qué productos están en temporada de cosecha — con su frase relacional, altitud y piso ecológico.</div>
+          <div class="card-desc">Elige un mes y descubre qué productos están en temporada — con su frase relacional, altitud y piso ecológico.</div>
         </div>
-        <div class="card-arrow">→</div>
       </div>
     </a>
 
-    <a class="card card-2" href="tiempo-en-el-plato.html" style="animation-delay:0.3s">
+    <a class="card card-2" href="tiempo-en-el-plato.html" style="animation-delay:0.2s">
       <div class="card-inner">
         <div class="card-num">02</div>
         <div class="card-sep"></div>
         <div class="card-content">
           <div class="card-titulo">El tiempo en tu plato</div>
-          <div class="card-desc">¿Cuánto tiempo viajó este producto desde la siembra hasta tu mesa? Ciclo anual, altitud, nodos relacionales y origen.</div>
+          <div class="card-desc">¿Cuántos meses viajó este producto desde la siembra hasta tu mesa? Ciclo anual, altitud y nodos relacionales.</div>
         </div>
-        <div class="card-arrow">→</div>
       </div>
     </a>
 
-    <a class="card card-3" href="piso-ecologico.html" style="animation-delay:0.4s">
+    <a class="card card-3" href="piso-ecologico.html" style="animation-delay:0.25s">
       <div class="card-inner">
         <div class="card-num">03</div>
         <div class="card-sep"></div>
@@ -339,34 +176,31 @@
           <div class="card-titulo">¿De qué piso ecológico eres?</div>
           <div class="card-desc">5 preguntas sobre tus hábitos alimenticios revelan a cuál de los 7 pisos ecológicos peruanos perteneces.</div>
         </div>
-        <div class="card-arrow">→</div>
       </div>
     </a>
 
-    <a class="card card-4" href="adivina-producto.html" style="animation-delay:0.5s">
+    <a class="card card-4" href="adivina-producto.html" style="animation-delay:0.3s">
       <div class="card-inner">
         <div class="card-num">04</div>
         <div class="card-sep"></div>
         <div class="card-content">
           <div class="card-titulo">Adivina el producto</div>
-          <div class="card-desc">Una frase relacional, tres intentos, dos pistas. ¿Reconoces el alimento que la pronuncia? 8 rondas, productos mezclados.</div>
+          <div class="card-desc">Cada alimento habla en primera persona. Tres intentos para adivinar cuál es — usa las pistas si necesitas ayuda.</div>
         </div>
-        <div class="card-arrow">→</div>
       </div>
     </a>
-
   </div>
 
   <div class="sep"></div>
 
   <div class="sobre">
     <div class="sobre-titulo">Sobre el proyecto</div>
-    <p class="sobre-texto">En las culturas andino-amazónicas la existencia es relación ininterrumpida. Cada producto aquí consignado es un ente relacional: no existe fuera de su ecosistema, su ciclo, su territorio y las manos que lo cultivan. Este proyecto traduce esa filosofía en herramientas digitales de exploración y aprendizaje.</p>
+    <p class="sobre-texto">Existo en Relación es una cartografía del tiempo y el territorio en los alimentos peruanos. Visualiza la filosofía andino-amazónica de la existencia relacional: cada producto no existe fuera de su ecosistema, su ciclo, su territorio y las manos que lo cultivan. Un proyecto de Habitante y Camila Bustamante, Lima, 2026.</p>
   </div>
 
   <footer>
     <div class="footer-logo">Existo en Relación</div>
-    <div class="footer-sub">Habitante · Lima, Perú · 2026</div>
+    <div class="footer-credito">Un proyecto de Habitante<br>y Camila Bustamante · Lima, 2026</div>
   </footer>
 
 </div>

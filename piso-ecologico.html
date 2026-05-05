@@ -4,494 +4,175 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>¿De qué piso ecológico eres? — Existo en Relación</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F7F3EA;
-    --crema: #EDE8D8;
-    --crema-dark: #D8D0B8;
-    --text: #1C1C14;
-    --text-sec: #6A6A58;
-    --text-ter: #A0A088;
-
-    /* Pisos */
-    --janca:   #E8F0F8; --janca-a:   #1A4A8A; --janca-b: #4A7AC8;
-    --puna:    #E8F3E0; --puna-a:    #1A5010; --puna-b:  #4A9030;
-    --suni:    #EDF2DC; --suni-a:    #2A5818; --suni-b:  #6AAA38;
-    --quechua: #F5EDD8; --quechua-a: #7A4A08; --quechua-b:#C87A20;
-    --yunga:   #F5E8E0; --yunga-a:   #7A2A10; --yunga-b: #C84A28;
-    --chala:   #F0EAE0; --chala-a:   #5A4A28; --chala-b: #9A7A48;
-    --selva:   #E0F0E8; --selva-a:   #085A30; --selva-b: #28A060;
+    --bg:          #F5F1E6;
+    --bg2:         #EDE8D6;
+    --border:      #D8D2BE;
+    --border-dark: #B8B0A0;
+    --verde:       #2D5016;
+    --verde-med:   #4A7A22;
+    --verde-light: #C0DD97;
+    --verde-pale:  #EAF3DE;
+    --text:        #1A1A12;
+    --text-sec:    #5A5A48;
+    --text-ter:    #9A9A82;
+    --white:       #FFFFFF;
+    --radius-sm:   8px;
+    --radius-md:   14px;
+    --radius-lg:   20px;
+    --radius-xl:   28px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 660px; margin: 0 auto; padding: 0 24px 96px; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Outfit', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+  /* ── NAV ── */
+  nav { display: flex; align-items: center; gap: 8px; padding: 24px 0 32px; border-bottom: 1px solid var(--border); margin-bottom: 52px; animation: fadeUp 0.5s ease both; }
+  .nav-back { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--text-ter); text-decoration: none; letter-spacing: 0.04em; display: flex; align-items: center; gap: 6px; transition: color 0.2s; white-space: nowrap; }
+  .nav-back:hover { color: var(--verde); }
+  .nav-sep { color: var(--border-dark); font-size: 12px; flex-shrink: 0; }
+  .nav-current { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-sec); letter-spacing: 0.04em; text-transform: uppercase; }
+  .nav-credito { margin-left: auto; font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text-ter); text-align: right; letter-spacing: 0.02em; white-space: nowrap; }
 
-  /* Patrón de fondo sutil */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image:
-      repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(0,0,0,0.012) 40px, rgba(0,0,0,0.012) 41px),
-      repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0,0,0,0.012) 40px, rgba(0,0,0,0.012) 41px);
-    pointer-events: none;
-  }
+  /* ── HEADER ── */
+  header { margin-bottom: 48px; animation: fadeUp 0.5s 0.05s ease both; }
+  .eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--verde-med); margin-bottom: 14px; }
+  h1 { font-family: 'Syne', sans-serif; font-size: clamp(36px, 8vw, 60px); font-weight: 800; line-height: 0.95; letter-spacing: -0.02em; color: var(--text); margin-bottom: 14px; }
+  h1 em { font-style: normal; color: var(--verde); }
+  .subtitle { font-size: 14px; color: var(--text-sec); line-height: 1.7; max-width: 440px; }
 
-  .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 52px 24px 80px;
-    position: relative;
-  }
+  /* ── PROGRESO ── */
+  .progreso-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 40px; animation: fadeUp 0.5s 0.1s ease both; }
+  .progreso-track { flex: 1; height: 3px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .progreso-fill { height: 100%; background: var(--verde); border-radius: 3px; transition: width 0.4s ease; width: 0%; }
+  .progreso-texto { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--text-ter); white-space: nowrap; letter-spacing: 0.06em; }
 
-  /* HEADER */
-  header {
-    text-align: center;
-    margin-bottom: 52px;
-    animation: fadeUp 0.6s ease both;
-  }
+  /* ── PREGUNTA ── */
+  .pregunta-wrap { animation: slideIn 0.35s ease both; }
+  .pregunta-num { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-ter); margin-bottom: 10px; }
+  .pregunta-texto { font-family: 'Syne', sans-serif; font-size: clamp(20px, 4.5vw, 28px); font-weight: 800; line-height: 1.2; letter-spacing: -0.02em; color: var(--text); margin-bottom: 28px; }
 
-  .eyebrow {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--text-ter);
-    margin-bottom: 16px;
-  }
-
-  h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(32px, 7vw, 54px);
-    font-weight: 400;
-    line-height: 1.1;
-    color: var(--text);
-    margin-bottom: 14px;
-  }
-
-  h1 em { font-style: italic; color: #4A7A22; }
-
-  .subtitle {
-    font-size: 14px;
-    color: var(--text-sec);
-    line-height: 1.7;
-    max-width: 380px;
-    margin: 0 auto;
-  }
-
-  /* BARRA DE PROGRESO */
-  .progreso-wrap {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 40px;
-    animation: fadeUp 0.6s 0.1s ease both;
-  }
-
-  .progreso-track {
-    flex: 1;
-    height: 3px;
-    background: var(--crema-dark);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .progreso-fill {
-    height: 100%;
-    background: #4A7A22;
-    border-radius: 3px;
-    transition: width 0.4s ease;
-    width: 0%;
-  }
-
-  .progreso-texto {
-    font-size: 11px;
-    color: var(--text-ter);
-    white-space: nowrap;
-    letter-spacing: 0.04em;
-  }
-
-  /* PREGUNTA */
-  .pregunta-wrap {
-    animation: fadeUp 0.4s ease both;
-  }
-
-  .pregunta-num {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-ter);
-    margin-bottom: 12px;
-  }
-
-  .pregunta-texto {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(22px, 5vw, 32px);
-    font-weight: 400;
-    line-height: 1.3;
-    color: var(--text);
-    margin-bottom: 32px;
-  }
-
-  /* OPCIONES */
-  .opciones { display: flex; flex-direction: column; gap: 10px; }
-
-  .opcion {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 16px 20px;
-    background: white;
-    border: 1.5px solid var(--crema-dark);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: left;
-  }
-
-  .opcion:hover {
-    border-color: #4A7A22;
-    background: #F4FAF0;
-    transform: translateX(4px);
-  }
-
-  .opcion-letra {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    background: var(--crema);
-    border: 1.5px solid var(--crema-dark);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-sec);
-    flex-shrink: 0;
-    transition: all 0.2s;
-  }
-
-  .opcion:hover .opcion-letra {
-    background: #4A7A22;
-    border-color: #4A7A22;
-    color: white;
-  }
-
+  /* ── OPCIONES ── */
+  .opciones { display: flex; flex-direction: column; gap: 9px; }
+  .opcion { display: flex; align-items: center; gap: 14px; padding: 16px 20px; background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s; text-align: left; }
+  .opcion:hover { border-color: var(--verde-med); background: var(--verde-pale); transform: translateX(4px); }
+  .opcion-letra { width: 28px; height: 28px; border-radius: var(--radius-sm); background: var(--bg); border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--text-ter); flex-shrink: 0; transition: all 0.2s; }
+  .opcion:hover .opcion-letra { background: var(--verde); border-color: var(--verde); color: var(--white); }
   .opcion-texto { font-size: 14px; color: var(--text); line-height: 1.4; }
-  .opcion-sub { font-size: 12px; color: var(--text-sec); margin-top: 2px; font-style: italic; }
+  .opcion-sub { font-size: 12px; color: var(--text-ter); margin-top: 2px; font-style: italic; }
 
-  /* RESULTADO */
-  #resultado {
-    display: none;
-    animation: fadeUp 0.6s ease both;
-  }
+  /* ── RESULTADO ── */
+  #resultado { display: none; animation: fadeUp 0.5s ease both; }
 
-  .resultado-piso {
-    border-radius: 20px;
-    padding: 36px;
-    margin-bottom: 24px;
-    position: relative;
-    overflow: hidden;
-  }
+  .resultado-piso { border-radius: var(--radius-xl); padding: 36px; margin-bottom: 16px; position: relative; overflow: hidden; }
+  .resultado-piso::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, transparent, transparent 12px, rgba(0,0,0,0.025) 12px, rgba(0,0,0,0.025) 13px); border-radius: var(--radius-xl); }
+  .res-inner { position: relative; z-index: 1; }
+  .res-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.6; margin-bottom: 8px; }
+  .res-nombre { font-family: 'Syne', sans-serif; font-size: clamp(40px, 10vw, 64px); font-weight: 800; line-height: 0.95; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .res-altitud { font-size: 13px; font-weight: 500; opacity: 0.65; margin-bottom: 16px; letter-spacing: 0.02em; }
+  .res-descripcion { font-size: 14px; line-height: 1.75; opacity: 0.85; max-width: 480px; }
 
-  .resultado-piso::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0.15;
-    background: repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 10px,
-      rgba(0,0,0,0.06) 10px,
-      rgba(0,0,0,0.06) 11px
-    );
-  }
+  .sec-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px 24px; margin-bottom: 12px; }
+  .sec-titulo { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-ter); margin-bottom: 12px; }
 
-  .res-eyebrow {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    opacity: 0.7;
-  }
+  .res-productos { display: flex; flex-wrap: wrap; gap: 8px; }
+  .res-prod-tag { padding: 6px 14px; border-radius: 100px; font-size: 13px; border: 1.5px solid; }
 
-  .res-nombre {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 8vw, 56px);
-    font-weight: 600;
-    line-height: 1;
-    margin-bottom: 6px;
-  }
+  .res-frase { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; color: var(--text); line-height: 1.4; letter-spacing: -0.01em; margin-bottom: 6px; }
+  .res-frase-prod { font-size: 12px; color: var(--text-ter); }
 
-  .res-altitud {
-    font-size: 13px;
-    font-weight: 500;
-    opacity: 0.7;
-    margin-bottom: 16px;
-    letter-spacing: 0.04em;
-  }
+  .btn-reiniciar { width: 100%; background: var(--verde); border: none; border-radius: var(--radius-md); padding: 16px; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--white); cursor: pointer; transition: all 0.2s; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 4px; }
+  .btn-reiniciar:hover { background: var(--verde-med); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(45,80,22,0.18); }
 
-  .res-descripcion {
-    font-size: 15px;
-    line-height: 1.7;
-    opacity: 0.85;
-    max-width: 440px;
-  }
+  /* ── FOOTER ── */
+  footer { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  .footer-logo { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--verde); letter-spacing: 0.04em; text-transform: uppercase; }
+  .footer-credito { font-size: 11px; color: var(--text-ter); text-align: right; }
 
-  /* Productos del piso */
-  .res-productos-titulo {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-ter);
-    margin-bottom: 12px;
-  }
+  @keyframes fadeUp  { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes slideIn { from { opacity:0; transform:translateX(18px); } to { opacity:1; transform:translateX(0); } }
 
-  .res-productos {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 24px;
-  }
-
-  .res-prod-tag {
-    padding: 6px 14px;
-    border-radius: 100px;
-    font-size: 13px;
-    font-weight: 400;
-    border: 1.5px solid;
-  }
-
-  /* Frase relacional */
-  .res-frase-card {
-    background: white;
-    border: 1px solid var(--crema-dark);
-    border-radius: 14px;
-    padding: 20px 22px;
-    margin-bottom: 24px;
-  }
-
-  .res-frase-label {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-ter);
-    margin-bottom: 10px;
-  }
-
-  .res-frase {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    font-style: italic;
-    color: var(--text);
-    line-height: 1.5;
-    margin-bottom: 6px;
-  }
-
-  .res-frase-prod {
-    font-size: 12px;
-    color: var(--text-sec);
-  }
-
-  /* Botón reiniciar */
-  .btn-reiniciar {
-    width: 100%;
-    background: var(--text);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 16px;
-    font-family: 'Outfit', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.04em;
-    margin-bottom: 12px;
-  }
-
-  .btn-reiniciar:hover { background: #4A7A22; transform: translateY(-1px); }
-
-  footer {
-    text-align: center;
-    margin-top: 60px;
-    padding-top: 28px;
-    border-top: 1px solid var(--crema-dark);
-  }
-
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 14px;
-    font-style: italic;
-    color: #4A7A22;
-    margin-bottom: 4px;
-  }
-
-  .footer-sub { font-size: 11px; color: var(--text-ter); }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateX(20px); }
-    to   { opacity: 1; transform: translateX(0); }
+  @media (max-width: 480px) {
+    h1 { font-size: 40px; }
+    .resultado-piso { padding: 24px; }
+    .nav-credito { display: none; }
   }
 </style>
 </head>
 <body>
 <div class="container">
 
+  <nav>
+    <a class="nav-back" href="index.html">← Inicio</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-current">Piso ecológico</span>
+    <span class="nav-credito">Un proyecto de Habitante<br>y Camila Bustamante</span>
+  </nav>
+
   <header>
-    <div class="eyebrow">Existo en Relación · Habitante</div>
-    <h1>¿De qué piso<br>ecológico <em>eres?</em></h1>
+    <div class="eyebrow">Un proyecto de Habitante y Camila Bustamante</div>
+    <h1>¿DE QUÉ PISO<br>ECOLÓGICO <em>ERES?</em></h1>
     <p class="subtitle">5 preguntas sobre tus hábitos alimenticios revelan a qué piso ecológico peruano perteneces.</p>
   </header>
 
   <div class="progreso-wrap">
-    <div class="progreso-track">
-      <div class="progreso-fill" id="progresoFill"></div>
-    </div>
+    <div class="progreso-track"><div class="progreso-fill" id="progresoFill"></div></div>
     <div class="progreso-texto" id="progresoTexto">0 / 5</div>
   </div>
 
   <div class="pregunta-wrap" id="preguntaWrap"></div>
-
   <div id="resultado"></div>
 
   <footer>
     <div class="footer-logo">Existo en Relación</div>
-    <div class="footer-sub">Cartografía del tiempo y el territorio en los alimentos peruanos · Habitante, 2026</div>
+    <div class="footer-credito">Un proyecto de Habitante<br>y Camila Bustamante · Lima, 2026</div>
   </footer>
 
 </div>
-
 <script>
-// ── PISOS ────────────────────────────────────────────────────────
 const PISOS = {
-  janca: {
-    nombre: 'Janca',
-    subtitulo: 'La cordillera blanca',
-    altitud: '4 800 – 6 700 msnm',
-    bg: '#E8F0F8', colorA: '#1A4A8A', colorB: '#4A7AC8',
-    descripcion: 'Habitas las alturas más extremas del territorio peruano. Tu paladar busca intensidad, pureza y resistencia. Como la nieve perpetua que corona los Andes, tu existencia relacional se define en los límites: donde el aire es escaso y la vida, extraordinaria.',
-    productos: [],
-    frase: { texto: '"La quinua mide el frío extremo." Soporta heladas hasta −8°C.', producto: 'Quinua — vecina del Janca' }
-  },
-  puna: {
-    nombre: 'Puna',
-    subtitulo: 'El altiplano andino',
-    altitud: '4 000 – 4 800 msnm',
-    bg: '#E8F3E0', colorA: '#1A5010', colorB: '#4A9030',
-    descripcion: 'Eres del altiplano — el territorio donde la quinua mide el frío extremo y la papa guarda el tiempo en forma de chuño. Tu existencia relacional se construye con paciencia, con heladas nocturnas y con la memoria larga de comunidades aimaras y quechuas.',
-    productos: ['Quinua', 'Oca', 'Papa (nativa)'],
-    frase: { texto: '"La oca dulcifica con el sol." 1 a 2 semanas expuesta al sol la transforman.', producto: 'Oca — Oxalis tuberosa' }
-  },
-  suni: {
-    nombre: 'Suni',
-    subtitulo: 'La jalca fría',
-    altitud: '3 500 – 4 000 msnm',
-    bg: '#EDF2DC', colorA: '#2A5818', colorB: '#6AAA38',
-    descripcion: 'Te mueves en la zona de transición entre el altiplano y los valles templados. Tu gusto equilibra lo extremo y lo suave. Aquí crece la kiwicha con sus días cortos, el maíz de altura y la papa nativa. Existes en la bisagra del territorio andino.',
-    productos: ['Kiwicha', 'Papa nativa', 'Maíz de altura'],
-    frase: { texto: '"La kiwicha mide la altitud media." Florece solo con días cortos.', producto: 'Kiwicha — Amaranthus caudatus' }
-  },
-  quechua: {
-    nombre: 'Quechua',
-    subtitulo: 'El valle templado',
-    altitud: '2 300 – 3 500 msnm',
-    bg: '#F5EDD8', colorA: '#7A4A08', colorB: '#C87A20',
-    descripcion: 'Eres del corazón de los Andes. El piso más diverso y poblado del Perú — donde el maíz sincroniza calendarios, la lúcuma espera paciente y la chirimoya no se apura. Tu existencia relacional es rica, templada y profundamente andina.',
-    productos: ['Maíz', 'Lúcuma', 'Chirimoya', 'Aguaymanto', 'Papa'],
-    frase: { texto: '"El maíz sincroniza civilizaciones." Su ciclo marcó calendarios agrícolas andinos.', producto: 'Maíz — Zea mays' }
-  },
-  yunga: {
-    nombre: 'Yunga',
-    subtitulo: 'El valle cálido',
-    altitud: '500 – 2 300 msnm',
-    bg: '#F5E8E0', colorA: '#7A2A10', colorB: '#C84A28',
-    descripcion: 'Prefieres lo cálido, lo aromático y lo intenso. La yunga es el piso del aguaymanto que mide la luz, la chirimoya que no se apura y el cacao que necesita sombra. Tu paladar es complejo y lleno de matices — como los valles que descienden hacia la selva.',
-    productos: ['Aguaymanto', 'Chirimoya', 'Lúcuma', 'Palta'],
-    frase: { texto: '"La palta toma su tiempo." Puede permanecer en el árbol meses sin madurar.', producto: 'Palta — Persea americana' }
-  },
-  chala: {
-    nombre: 'Chala',
-    subtitulo: 'La costa desértica',
-    altitud: '0 – 500 msnm',
-    bg: '#F0EAE0', colorA: '#5A4A28', colorB: '#9A7A48',
-    descripcion: 'Eres de la costa — el desierto que alimenta al Perú. Tu existencia relacional se construye con el camote que viajó por el Pacífico, el tomate que mide la temperatura y la palta que domina los mercados globales. Eficiencia, brisa marina y sol constante.',
-    productos: ['Camote', 'Tomate', 'Palta', 'Lechuga'],
-    frase: { texto: '"El camote viaja." Cruzó el Océano Pacífico precolombinamente.', producto: 'Camote — Ipomoea batatas' }
-  },
-  selva: {
-    nombre: 'Selva',
-    subtitulo: 'La Amazonía',
-    altitud: '0 – 1 000 msnm',
-    bg: '#E0F0E8', colorA: '#085A30', colorB: '#28A060',
-    descripcion: 'Eres amazónico. Tu paladar busca lo profundo, lo húmedo y lo transformador. El cacao que necesita sombra, la lúcuma que espera — la selva impone un ritmo lento y continuo. Tu existencia relacional es la más biodiversa y misteriosa del territorio peruano.',
-    productos: ['Cacao', 'Lúcuma amazónica'],
-    frase: { texto: '"El cacao necesita sombra." Crece bajo el dosel del bosque — la selva es su techo.', producto: 'Cacao — Theobroma cacao' }
-  },
+  janca:   { nombre:'Janca',   subtitulo:'La cordillera blanca', altitud:'4 800 – 6 700 msnm', bg:'#E8F0F8', colorA:'#1A4A8A', colorB:'#4A7AC8', descripcion:'Habitas las alturas más extremas del territorio peruano. Tu paladar busca intensidad, pureza y resistencia. Como la nieve perpetua que corona los Andes, tu existencia relacional se define en los límites: donde el aire es escaso y la vida, extraordinaria.', productos:[], frase:{ texto:'"La quinua mide el frío extremo." Soporta heladas hasta −8°C.', producto:'Quinua — vecina del Janca' } },
+  puna:    { nombre:'Puna',    subtitulo:'El altiplano andino',  altitud:'4 000 – 4 800 msnm', bg:'#E8F3E0', colorA:'#1A5010', colorB:'#4A9030', descripcion:'Eres del altiplano — donde la quinua mide el frío extremo y la papa guarda el tiempo en forma de chuño. Tu existencia relacional se construye con paciencia, heladas nocturnas y la memoria larga de comunidades aimaras y quechuas.', productos:['Quinua','Oca','Papa nativa'], frase:{ texto:'"La oca dulcifica con el sol." 1 a 2 semanas expuesta al sol la transforman.', producto:'Oca — Oxalis tuberosa' } },
+  suni:    { nombre:'Suni',    subtitulo:'La jalca fría',        altitud:'3 500 – 4 000 msnm', bg:'#EDF2DC', colorA:'#2A5818', colorB:'#6AAA38', descripcion:'Te mueves en la zona de transición entre el altiplano y los valles templados. Tu gusto equilibra lo extremo y lo suave. Aquí crece la kiwicha con sus días cortos y el maíz de altura.', productos:['Kiwicha','Papa nativa','Maíz de altura'], frase:{ texto:'"La kiwicha mide la altitud media." Florece solo con días cortos.', producto:'Kiwicha — Amaranthus caudatus' } },
+  quechua: { nombre:'Quechua', subtitulo:'El valle templado',    altitud:'2 300 – 3 500 msnm', bg:'#F5EDD8', colorA:'#7A4A08', colorB:'#C87A20', descripcion:'Eres del corazón de los Andes — el piso más diverso y poblado del Perú. El maíz sincroniza calendarios, la lúcuma espera paciente y la chirimoya no se apura. Tu existencia relacional es rica y profundamente andina.', productos:['Maíz','Lúcuma','Chirimoya','Aguaymanto','Papa'], frase:{ texto:'"El maíz sincroniza civilizaciones." Su ciclo marcó calendarios agrícolas andinos.', producto:'Maíz — Zea mays' } },
+  yunga:   { nombre:'Yunga',   subtitulo:'El valle cálido',      altitud:'500 – 2 300 msnm',   bg:'#F5E8E0', colorA:'#7A2A10', colorB:'#C84A28', descripcion:'Prefieres lo cálido, lo aromático y lo intenso. La yunga es el piso del aguaymanto que mide la luz, la chirimoya que no se apura y la palta que toma su tiempo. Tu paladar es complejo y lleno de matices.', productos:['Aguaymanto','Chirimoya','Lúcuma','Palta'], frase:{ texto:'"La palta toma su tiempo." Puede permanecer en el árbol meses sin madurar.', producto:'Palta — Persea americana' } },
+  chala:   { nombre:'Chala',   subtitulo:'La costa desértica',   altitud:'0 – 500 msnm',       bg:'#F0EAE0', colorA:'#5A4A28', colorB:'#9A7A48', descripcion:'Eres de la costa — el desierto que alimenta al Perú. El camote que viajó por el Pacífico, el tomate que mide la temperatura, la palta que domina los mercados globales. Eficiencia, brisa marina y sol constante.', productos:['Camote','Tomate','Palta','Lechuga'], frase:{ texto:'"El camote viaja." Cruzó el Océano Pacífico precolombinamente.', producto:'Camote — Ipomoea batatas' } },
+  selva:   { nombre:'Selva',   subtitulo:'La Amazonía',          altitud:'0 – 1 000 msnm',     bg:'#E0F0E8', colorA:'#085A30', colorB:'#28A060', descripcion:'Eres amazónico. Tu paladar busca lo profundo, lo húmedo y lo transformador. El cacao que necesita sombra — la selva impone un ritmo lento y continuo. Tu existencia relacional es la más biodiversa del territorio peruano.', productos:['Cacao','Lúcuma amazónica'], frase:{ texto:'"El cacao necesita sombra." Crece bajo el dosel del bosque amazónico.', producto:'Cacao — Theobroma cacao' } },
 };
 
-// ── PREGUNTAS Y PUNTAJES ─────────────────────────────────────────
-// Cada opción suma puntos a uno o más pisos
 const PREGUNTAS = [
-  {
-    texto: '¿Cuál de estos productos te resulta más familiar en tu cocina cotidiana?',
-    opciones: [
-      { texto: 'Papa',       sub: 'en todas sus variedades',    puntos: { puna: 3, suni: 1, quechua: 2 } },
-      { texto: 'Camote',     sub: 'asado, en sopa o en postre', puntos: { chala: 3, quechua: 1 } },
-      { texto: 'Maíz',       sub: 'choclo, cancha, chicha',     puntos: { quechua: 3, suni: 2 } },
-      { texto: 'Cacao',      sub: 'chocolate, cacao puro',      puntos: { selva: 3, yunga: 1 } },
-    ]
-  },
-  {
-    texto: '¿Qué fruta eliges cuando quieres algo especial?',
-    opciones: [
-      { texto: 'Lúcuma',     sub: 'helado, torta, chocotejas',  puntos: { quechua: 2, yunga: 2 } },
-      { texto: 'Aguaymanto', sub: 'fresca, en mermelada',       puntos: { suni: 2, yunga: 2 } },
-      { texto: 'Chirimoya',  sub: 'cuando aparece en el mercado', puntos: { yunga: 2, quechua: 2 } },
-      { texto: 'Palta',      sub: 'en todo, siempre',           puntos: { chala: 2, yunga: 2 } },
-    ]
-  },
-  {
-    texto: '¿Qué alimento te parece más nutritivo y poderoso?',
-    opciones: [
-      { texto: 'Quinua',   sub: 'grano completo, proteína vegetal',     puntos: { puna: 3, suni: 1 } },
-      { texto: 'Kiwicha',  sub: 'cereal andino alto en lisina',         puntos: { suni: 3, quechua: 1 } },
-      { texto: 'Oca',      sub: 'tubérculo que el sol endulza',         puntos: { puna: 2, suni: 2 } },
-      { texto: 'Cacao puro', sub: 'antioxidante, energizante natural',  puntos: { selva: 3, yunga: 1 } },
-    ]
-  },
-  {
-    texto: '¿Cómo describirías tu relación con el tiempo?',
-    opciones: [
-      { texto: 'Soy paciente — espero que las cosas maduren',           sub: 'como la lúcuma', puntos: { quechua: 2, yunga: 2 } },
-      { texto: 'Me adapto al ritmo de las estaciones',                  sub: 'como la quinua',  puntos: { puna: 2, suni: 2 } },
-      { texto: 'Soy eficiente — mido cada grado de temperatura',        sub: 'como el tomate',  puntos: { chala: 3 } },
-      { texto: 'Sigo el ritmo lento y continuo de la naturaleza',       sub: 'como la selva',   puntos: { selva: 3 } },
-    ]
-  },
-  {
-    texto: 'Si pudieras elegir dónde vivir en el Perú, ¿qué paisaje elegiría tu cuerpo?',
-    opciones: [
-      { texto: 'Las alturas del altiplano — frío extremo, cielo enorme', sub: '> 3 800 msnm', puntos: { puna: 3, janca: 1 } },
-      { texto: 'Los valles andinos templados — maíz y chirimoya',        sub: '2 300–3 500 msnm', puntos: { quechua: 3, suni: 1 } },
-      { texto: 'La costa desértica — brisa marina y sol constante',      sub: '0–500 msnm', puntos: { chala: 3 } },
-      { texto: 'La selva húmeda — sombra del dosel, cacao y biodiversidad', sub: '0–900 msnm', puntos: { selva: 3, yunga: 1 } },
-    ]
-  },
+  { texto:'¿Cuál de estos productos te resulta más familiar en tu cocina cotidiana?', opciones:[
+    { texto:'Papa', sub:'en todas sus variedades', puntos:{ puna:3, suni:1, quechua:2 } },
+    { texto:'Camote', sub:'asado, en sopa o en postre', puntos:{ chala:3, quechua:1 } },
+    { texto:'Maíz', sub:'choclo, cancha, chicha', puntos:{ quechua:3, suni:2 } },
+    { texto:'Cacao', sub:'chocolate, cacao puro', puntos:{ selva:3, yunga:1 } },
+  ]},
+  { texto:'¿Qué fruta eliges cuando quieres algo especial?', opciones:[
+    { texto:'Lúcuma', sub:'helado, torta, chocotejas', puntos:{ quechua:2, yunga:2 } },
+    { texto:'Aguaymanto', sub:'fresca, en mermelada', puntos:{ suni:2, yunga:2 } },
+    { texto:'Chirimoya', sub:'cuando aparece en el mercado', puntos:{ yunga:2, quechua:2 } },
+    { texto:'Palta', sub:'en todo, siempre', puntos:{ chala:2, yunga:2 } },
+  ]},
+  { texto:'¿Qué alimento te parece más nutritivo y poderoso?', opciones:[
+    { texto:'Quinua', sub:'grano completo, proteína vegetal', puntos:{ puna:3, suni:1 } },
+    { texto:'Kiwicha', sub:'cereal andino alto en lisina', puntos:{ suni:3, quechua:1 } },
+    { texto:'Oca', sub:'tubérculo que el sol endulza', puntos:{ puna:2, suni:2 } },
+    { texto:'Cacao puro', sub:'antioxidante, energizante natural', puntos:{ selva:3, yunga:1 } },
+  ]},
+  { texto:'¿Cómo describirías tu relación con el tiempo?', opciones:[
+    { texto:'Soy paciente — espero que las cosas maduren', sub:'como la lúcuma', puntos:{ quechua:2, yunga:2 } },
+    { texto:'Me adapto al ritmo de las estaciones', sub:'como la quinua', puntos:{ puna:2, suni:2 } },
+    { texto:'Soy eficiente — mido cada grado de temperatura', sub:'como el tomate', puntos:{ chala:3 } },
+    { texto:'Sigo el ritmo lento y continuo de la naturaleza', sub:'como la selva', puntos:{ selva:3 } },
+  ]},
+  { texto:'Si pudieras elegir dónde vivir en el Perú, ¿qué paisaje elegiría tu cuerpo?', opciones:[
+    { texto:'Las alturas del altiplano — frío extremo, cielo enorme', sub:'> 3 800 msnm', puntos:{ puna:3, janca:1 } },
+    { texto:'Los valles andinos templados — maíz y chirimoya', sub:'2 300–3 500 msnm', puntos:{ quechua:3, suni:1 } },
+    { texto:'La costa desértica — brisa marina y sol constante', sub:'0–500 msnm', puntos:{ chala:3 } },
+    { texto:'La selva húmeda — sombra del dosel y biodiversidad', sub:'0–900 msnm', puntos:{ selva:3, yunga:1 } },
+  ]},
 ];
 
 const LETRAS = ['A','B','C','D'];
@@ -499,18 +180,12 @@ let preguntaActual = 0;
 let puntajes = {};
 Object.keys(PISOS).forEach(k => puntajes[k] = 0);
 
-// ── RENDER PREGUNTA ──────────────────────────────────────────────
 function renderPregunta() {
   const wrap = document.getElementById('preguntaWrap');
   const p = PREGUNTAS[preguntaActual];
-  const pct = (preguntaActual / PREGUNTAS.length) * 100;
-  document.getElementById('progresoFill').style.width = pct + '%';
+  document.getElementById('progresoFill').style.width = (preguntaActual / PREGUNTAS.length * 100) + '%';
   document.getElementById('progresoTexto').textContent = preguntaActual + ' / ' + PREGUNTAS.length;
-
-  wrap.style.animation = 'none';
-  void wrap.offsetWidth;
-  wrap.style.animation = 'slideIn 0.35s ease both';
-
+  wrap.style.animation = 'none'; void wrap.offsetWidth; wrap.style.animation = 'slideIn 0.35s ease both';
   wrap.innerHTML = `
     <div class="pregunta-num">Pregunta ${preguntaActual + 1} de ${PREGUNTAS.length}</div>
     <div class="pregunta-texto">${p.texto}</div>
@@ -518,66 +193,50 @@ function renderPregunta() {
       ${p.opciones.map((o, i) => `
         <button class="opcion" onclick="elegir(${i})">
           <div class="opcion-letra">${LETRAS[i]}</div>
-          <div>
-            <div class="opcion-texto">${o.texto}</div>
-            <div class="opcion-sub">${o.sub}</div>
-          </div>
-        </button>
-      `).join('')}
-    </div>
-  `;
+          <div><div class="opcion-texto">${o.texto}</div><div class="opcion-sub">${o.sub}</div></div>
+        </button>`).join('')}
+    </div>`;
 }
 
 function elegir(idx) {
   const puntos = PREGUNTAS[preguntaActual].opciones[idx].puntos;
-  Object.entries(puntos).forEach(([piso, val]) => { puntajes[piso] += val; });
+  Object.entries(puntos).forEach(([p, v]) => { puntajes[p] += v; });
   preguntaActual++;
-
-  if (preguntaActual < PREGUNTAS.length) {
-    renderPregunta();
-  } else {
-    mostrarResultado();
-  }
+  if (preguntaActual < PREGUNTAS.length) { renderPregunta(); }
+  else { mostrarResultado(); }
 }
 
-// ── RESULTADO ───────────────────────────────────────────────────
 function mostrarResultado() {
   document.getElementById('progresoFill').style.width = '100%';
   document.getElementById('progresoTexto').textContent = '5 / 5';
   document.getElementById('preguntaWrap').innerHTML = '';
-
-  // Piso ganador
   const ganador = Object.entries(puntajes).sort((a,b) => b[1]-a[1])[0][0];
   const piso = PISOS[ganador];
-
   const res = document.getElementById('resultado');
   res.style.display = 'block';
-
   const prodTags = piso.productos.length > 0
     ? piso.productos.map(p => `<span class="res-prod-tag" style="background:${piso.bg};color:${piso.colorA};border-color:${piso.colorB}">${p}</span>`).join('')
     : `<span class="res-prod-tag" style="background:${piso.bg};color:${piso.colorA};border-color:${piso.colorB}">Zona sin cultivos — nieve perpetua</span>`;
-
   res.innerHTML = `
     <div class="resultado-piso" style="background:${piso.bg};color:${piso.colorA}">
-      <div class="res-eyebrow" style="color:${piso.colorB}">Tu piso ecológico</div>
-      <div class="res-nombre">${piso.nombre}</div>
-      <div class="res-altitud">${piso.subtitulo} · ${piso.altitud}</div>
-      <div class="res-descripcion">${piso.descripcion}</div>
+      <div class="res-inner">
+        <div class="res-eyebrow" style="color:${piso.colorB}">Tu piso ecológico</div>
+        <div class="res-nombre">${piso.nombre}</div>
+        <div class="res-altitud">${piso.subtitulo} · ${piso.altitud}</div>
+        <div class="res-descripcion">${piso.descripcion}</div>
+      </div>
     </div>
-
-    <div class="res-productos-titulo">Productos de tu territorio</div>
-    <div class="res-productos">${prodTags}</div>
-
-    <div class="res-frase-card">
-      <div class="res-frase-label">Una frase relacional de tu piso</div>
+    <div class="sec-card">
+      <div class="sec-titulo">Productos de tu territorio</div>
+      <div class="res-productos">${prodTags}</div>
+    </div>
+    <div class="sec-card">
+      <div class="sec-titulo">Una frase de tu piso</div>
       <div class="res-frase">${piso.frase.texto}</div>
       <div class="res-frase-prod">${piso.frase.producto}</div>
     </div>
-
-    <button class="btn-reiniciar" onclick="reiniciar()">→ Volver a empezar</button>
-  `;
-
-  res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    <button class="btn-reiniciar" onclick="reiniciar()">→ Volver a empezar</button>`;
+  res.scrollIntoView({ behavior:'smooth', block:'start' });
 }
 
 function reiniciar() {
@@ -586,10 +245,9 @@ function reiniciar() {
   document.getElementById('resultado').style.display = 'none';
   document.getElementById('resultado').innerHTML = '';
   renderPregunta();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top:0, behavior:'smooth' });
 }
 
-// Init
 renderPregunta();
 </script>
 </body>

@@ -4,218 +4,159 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Adivina el producto — Existo en Relación</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0A0F07;
-    --bg2: #111808;
-    --verde: #8BC34A;
-    --verde-dim: #2D4A10;
-    --verde-light: #BEDD80;
-    --crema: #F0EAD6;
-    --crema-dim: #A09880;
-    --text-sec: #607050;
-    --card: #161E0E;
-    --card-b: #222E14;
-    --rojo: #E05030;
-    --ambar: #E8A020;
-    --azul: #3A90D0;
+    --bg:          #F5F1E6;
+    --bg2:         #EDE8D6;
+    --border:      #D8D2BE;
+    --border-dark: #B8B0A0;
+    --verde:       #2D5016;
+    --verde-med:   #4A7A22;
+    --verde-light: #C0DD97;
+    --verde-pale:  #EAF3DE;
+    --text:        #1A1A12;
+    --text-sec:    #5A5A48;
+    --text-ter:    #9A9A82;
+    --white:       #FFFFFF;
+    --rojo:        #C03020;
+    --rojo-pale:   #FAEBE8;
+    --ambar:       #9A6010;
+    --ambar-pale:  #FDF5E0;
+    --radius-sm:   8px;
+    --radius-md:   14px;
+    --radius-lg:   20px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--crema); font-family: 'Outfit', sans-serif; min-height: 100vh; overflow-x: hidden; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 660px; margin: 0 auto; padding: 0 24px 96px; }
 
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(139,195,74,0.06) 0%, transparent 60%);
-    pointer-events: none;
-  }
+  /* ── NAV ── */
+  nav { display: flex; align-items: center; gap: 8px; padding: 24px 0 32px; border-bottom: 1px solid var(--border); margin-bottom: 52px; animation: fadeUp 0.5s ease both; }
+  .nav-back { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--text-ter); text-decoration: none; letter-spacing: 0.04em; display: flex; align-items: center; gap: 6px; transition: color 0.2s; white-space: nowrap; }
+  .nav-back:hover { color: var(--verde); }
+  .nav-sep { color: var(--border-dark); font-size: 12px; flex-shrink: 0; }
+  .nav-current { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-sec); letter-spacing: 0.04em; text-transform: uppercase; }
+  .nav-credito { margin-left: auto; font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text-ter); text-align: right; white-space: nowrap; }
 
-  .container { max-width: 620px; margin: 0 auto; padding: 48px 24px 80px; }
+  /* ── HEADER ── */
+  header { margin-bottom: 40px; animation: fadeUp 0.5s 0.05s ease both; }
+  .eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--verde-med); margin-bottom: 14px; }
+  h1 { font-family: 'Syne', sans-serif; font-size: clamp(36px, 8vw, 60px); font-weight: 800; line-height: 0.95; letter-spacing: -0.02em; color: var(--text); margin-bottom: 14px; }
+  h1 em { font-style: normal; color: var(--verde); }
+  .subtitle { font-size: 14px; color: var(--text-sec); line-height: 1.7; max-width: 440px; }
 
-  header { text-align: center; margin-bottom: 48px; animation: fadeUp 0.6s ease both; }
-  .eyebrow { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-sec); margin-bottom: 14px; }
-  h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 6vw, 46px); font-weight: 800; line-height: 1.05; color: var(--crema); margin-bottom: 10px; }
-  h1 span { color: var(--verde); }
-  .subtitle { font-size: 13px; color: var(--text-sec); line-height: 1.7; max-width: 360px; margin: 0 auto; }
-
-  /* MARCADOR */
-  .marcador-wrap { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; animation: fadeUp 0.6s 0.1s ease both; }
+  /* ── MARCADOR ── */
+  .marcador-wrap { display: flex; align-items: center; justify-content: space-between; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px 24px; margin-bottom: 28px; animation: fadeUp 0.5s 0.1s ease both; }
   .marcador-item { text-align: center; }
-  .marcador-num { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 700; line-height: 1; }
-  .marcador-lbl { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-sec); margin-top: 3px; }
-  .marcador-sep { width: 1px; height: 32px; background: var(--card-b); }
+  .marcador-num { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+  .marcador-lbl { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-ter); margin-top: 3px; }
+  .marcador-sep { width: 1px; height: 32px; background: var(--border); }
   .m-correctas { color: var(--verde); }
-  .m-intentos  { color: var(--ambar); }
-  .m-racha     { color: var(--verde-light); }
+  .m-ronda     { color: var(--text-sec); }
+  .m-racha     { color: var(--verde-med); }
 
-  /* JUEGO */
-  #juegoWrap { animation: fadeUp 0.5s ease both; }
+  /* ── JUEGO ── */
+  #juegoWrap { animation: fadeUp 0.4s ease both; }
 
-  /* Contador de ronda */
-  .ronda-info { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-  .ronda-num { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-sec); }
+  .ronda-info { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .ronda-num { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-ter); }
   .vidas-wrap { display: flex; gap: 6px; }
   .vida { width: 10px; height: 10px; border-radius: 50%; background: var(--verde); transition: background 0.3s; }
-  .vida.perdida { background: var(--card-b); }
+  .vida.perdida { background: var(--border); }
 
-  /* Card de frase */
-  .frase-card {
-    background: var(--card);
-    border: 1px solid var(--card-b);
-    border-radius: 20px;
-    padding: 36px 32px;
-    margin-bottom: 20px;
-    position: relative;
-    overflow: hidden;
-    min-height: 160px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .frase-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--verde-dim), transparent);
-  }
-  .frase-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-sec); margin-bottom: 16px; }
-  .frase-texto {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(18px, 4vw, 26px);
-    font-weight: 400;
-    line-height: 1.4;
-    color: var(--crema);
-  }
-  .frase-texto .oculto { color: var(--verde-dim); letter-spacing: 0.08em; }
+  /* Frase card */
+  .frase-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px 28px; margin-bottom: 16px; min-height: 140px; display: flex; flex-direction: column; justify-content: center; }
+  .frase-label { font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-ter); margin-bottom: 14px; }
+  .frase-texto { font-family: 'Syne', sans-serif; font-size: clamp(16px, 3.5vw, 22px); font-weight: 700; color: var(--text); line-height: 1.4; letter-spacing: -0.01em; }
 
   /* Pistas */
-  .pistas-wrap { display: flex; gap: 8px; margin-bottom: 20px; }
-  .pista-btn {
-    flex: 1; background: var(--card); border: 1px solid var(--card-b);
-    border-radius: 10px; padding: 10px 8px; cursor: pointer;
-    font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500;
-    color: var(--text-sec); letter-spacing: 0.06em; text-transform: uppercase;
-    transition: all 0.2s; text-align: center;
-  }
-  .pista-btn:hover:not(:disabled) { border-color: var(--ambar); color: var(--ambar); }
-  .pista-btn:disabled { opacity: 0.3; cursor: default; }
-  .pista-btn.usada { border-color: var(--ambar); color: var(--ambar); background: rgba(232,160,32,0.06); }
+  .pistas-wrap { display: flex; gap: 8px; margin-bottom: 12px; }
+  .pista-btn { flex: 1; background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 8px; cursor: pointer; font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; color: var(--text-ter); letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.18s; text-align: center; }
+  .pista-btn:hover:not(:disabled) { border-color: var(--ambar); color: var(--ambar); background: var(--ambar-pale); }
+  .pista-btn:disabled { opacity: 0.35; cursor: default; }
+  .pista-btn.usada { border-color: var(--ambar); color: var(--ambar); background: var(--ambar-pale); }
 
-  /* Pista visible */
-  .pista-visible {
-    background: rgba(232,160,32,0.08);
-    border: 1px solid rgba(232,160,32,0.2);
-    border-radius: 10px; padding: 10px 14px;
-    font-size: 12px; color: var(--ambar);
-    margin-bottom: 16px;
-    display: none;
-    animation: fadeUp 0.3s ease both;
-  }
+  .pista-visible { background: var(--ambar-pale); border: 1px solid #E8C878; border-radius: var(--radius-sm); padding: 10px 14px; font-size: 12px; color: var(--ambar); margin-bottom: 14px; display: none; animation: fadeUp 0.25s ease both; }
   .pista-visible.show { display: block; }
 
   /* Opciones */
-  .opciones-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
-  .opcion-btn {
-    background: var(--card); border: 1.5px solid var(--card-b);
-    border-radius: 12px; padding: 14px 16px;
-    font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 400;
-    color: var(--crema); cursor: pointer; transition: all 0.2s;
-    text-align: left; display: flex; align-items: center; gap: 10px;
-  }
-  .opcion-btn:hover:not(:disabled) { border-color: var(--verde); background: rgba(139,195,74,0.06); transform: translateY(-1px); }
+  .opciones-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+  .opcion-btn { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); cursor: pointer; transition: all 0.18s; text-align: left; display: flex; align-items: center; gap: 10px; }
+  .opcion-btn:hover:not(:disabled) { border-color: var(--verde-med); background: var(--verde-pale); transform: translateY(-1px); }
   .opcion-btn:disabled { cursor: default; }
-  .opcion-btn.correcta { border-color: var(--verde)!important; background: rgba(139,195,74,0.12)!important; color: var(--verde-light)!important; }
-  .opcion-btn.incorrecta { border-color: var(--rojo)!important; background: rgba(224,80,48,0.08)!important; color: #E08070!important; }
-  .opcion-letra {
-    width: 26px; height: 26px; border-radius: 6px;
-    background: var(--bg2); border: 1px solid var(--card-b);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700; color: var(--text-sec);
-    flex-shrink: 0; transition: all 0.2s;
-  }
-  .opcion-btn.correcta  .opcion-letra { background: var(--verde); border-color: var(--verde); color: #000; }
-  .opcion-btn.incorrecta .opcion-letra { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+  .opcion-btn.correcta  { border-color: var(--verde)!important; background: var(--verde-pale)!important; color: var(--verde)!important; }
+  .opcion-btn.incorrecta{ border-color: var(--rojo)!important; background: var(--rojo-pale)!important; color: var(--rojo)!important; }
+  .opcion-letra { width: 26px; height: 26px; border-radius: var(--radius-sm); background: var(--bg); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--text-ter); flex-shrink: 0; transition: all 0.18s; }
+  .opcion-btn.correcta  .opcion-letra { background: var(--verde); border-color: var(--verde); color: var(--white); }
+  .opcion-btn.incorrecta .opcion-letra { background: var(--rojo); border-color: var(--rojo); color: var(--white); }
 
   /* Feedback */
-  .feedback {
-    border-radius: 12px; padding: 16px 20px;
-    font-size: 13px; line-height: 1.6;
-    margin-bottom: 16px; display: none;
-    animation: fadeUp 0.3s ease both;
-  }
-  .feedback.correcto { background: rgba(139,195,74,0.1); border: 1px solid rgba(139,195,74,0.25); color: var(--verde-light); display: block; }
-  .feedback.incorrecto { background: rgba(224,80,48,0.08); border: 1px solid rgba(224,80,48,0.2); color: #E09080; display: block; }
-  .feedback.agotado { background: rgba(232,160,32,0.08); border: 1px solid rgba(232,160,32,0.2); color: var(--ambar); display: block; }
+  .feedback { border-radius: var(--radius-md); padding: 14px 18px; font-size: 13px; line-height: 1.6; margin-bottom: 14px; display: none; }
+  .feedback.correcto  { background: var(--verde-pale); border: 1px solid var(--verde-light); color: var(--verde); display: block; }
+  .feedback.incorrecto{ background: var(--rojo-pale);  border: 1px solid #F0B0A8; color: var(--rojo); display: block; }
+  .feedback.agotado   { background: var(--ambar-pale); border: 1px solid #E8C878; color: var(--ambar); display: block; }
   .feedback strong { font-weight: 500; }
 
   /* Botón siguiente */
-  .btn-siguiente {
-    width: 100%; background: var(--verde-dim); border: 1px solid var(--verde);
-    border-radius: 12px; padding: 15px; font-family: 'Syne', sans-serif;
-    font-size: 14px; font-weight: 700; color: var(--verde-light);
-    cursor: pointer; transition: all 0.2s; letter-spacing: 0.06em;
-    display: none; text-transform: uppercase;
+  .btn-siguiente { width: 100%; background: var(--verde); border: none; border-radius: var(--radius-md); padding: 15px; font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--white); cursor: pointer; transition: all 0.18s; letter-spacing: 0.06em; text-transform: uppercase; display: none; }
+  .btn-siguiente:hover { background: var(--verde-med); transform: translateY(-1px); }
+  .btn-siguiente.show { display: block; animation: fadeUp 0.25s ease both; }
+
+  /* ── FINAL ── */
+  #finalWrap { display: none; animation: fadeUp 0.5s ease both; }
+  .final-score { text-align: center; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 48px 32px; margin-bottom: 16px; }
+  .final-label { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-ter); margin-bottom: 12px; }
+  .final-num { font-family: 'Syne', sans-serif; font-size: clamp(64px, 14vw, 96px); font-weight: 800; color: var(--verde); line-height: 1; letter-spacing: -0.03em; margin-bottom: 8px; }
+  .final-de { font-size: 15px; color: var(--text-ter); margin-bottom: 20px; }
+  .final-mensaje { font-size: 15px; color: var(--text-sec); line-height: 1.7; max-width: 380px; margin: 0 auto; }
+
+  .sec-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px 24px; margin-bottom: 12px; }
+  .sec-titulo { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-ter); margin-bottom: 12px; }
+  .frase-mini { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 8px; font-size: 12px; color: var(--text-sec); line-height: 1.6; }
+  .frase-mini strong { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--verde); }
+
+  .btn-reiniciar { width: 100%; background: var(--verde); border: none; border-radius: var(--radius-md); padding: 16px; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--white); cursor: pointer; transition: all 0.2s; letter-spacing: 0.06em; text-transform: uppercase; }
+  .btn-reiniciar:hover { background: var(--verde-med); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(45,80,22,0.18); }
+
+  /* ── FOOTER ── */
+  footer { margin-top: 72px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  .footer-logo { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--verde); letter-spacing: 0.04em; text-transform: uppercase; }
+  .footer-credito { font-size: 11px; color: var(--text-ter); text-align: right; }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes shake  { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+  .shake { animation: shake 0.28s ease; }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 40px; }
+    .opciones-grid { grid-template-columns: 1fr; }
+    .nav-credito { display: none; }
   }
-  .btn-siguiente:hover { background: var(--verde); color: #0A0F07; }
-  .btn-siguiente.show { display: block; animation: fadeUp 0.3s ease both; }
-
-  /* PANTALLA FINAL */
-  #finalWrap { display: none; animation: fadeUp 0.6s ease both; }
-  .final-score {
-    text-align: center;
-    background: var(--card); border: 1px solid var(--card-b);
-    border-radius: 24px; padding: 48px 32px; margin-bottom: 24px;
-  }
-  .final-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-sec); margin-bottom: 12px; }
-  .final-num { font-family: 'Syne', sans-serif; font-size: clamp(60px, 14vw, 96px); font-weight: 800; color: var(--verde); line-height: 1; margin-bottom: 8px; }
-  .final-de { font-size: 16px; color: var(--text-sec); margin-bottom: 20px; }
-  .final-mensaje { font-size: 15px; color: var(--crema-dim); line-height: 1.7; max-width: 380px; margin: 0 auto; }
-
-  .final-frases { margin-bottom: 24px; }
-  .final-frases-titulo { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-sec); margin-bottom: 12px; }
-  .frase-mini { background: var(--card); border: 1px solid var(--card-b); border-radius: 10px; padding: 12px 16px; margin-bottom: 8px; font-size: 12px; color: var(--crema-dim); line-height: 1.5; }
-  .frase-mini strong { color: var(--verde-light); font-weight: 500; }
-
-  .btn-reiniciar {
-    width: 100%; background: var(--verde); border: none;
-    border-radius: 12px; padding: 16px; font-family: 'Syne', sans-serif;
-    font-size: 14px; font-weight: 700; color: #0A0F07; cursor: pointer;
-    transition: all 0.2s; letter-spacing: 0.06em; text-transform: uppercase;
-  }
-  .btn-reiniciar:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(139,195,74,0.3); }
-
-  footer { margin-top: 60px; padding-top: 28px; border-top: 1px solid var(--card-b); text-align: center; }
-  .footer-logo { font-family: 'Syne', sans-serif; font-size: 13px; color: var(--verde); margin-bottom: 4px; }
-  .footer-sub { font-size: 11px; color: var(--text-sec); }
-
-  @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
-  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
-  .shake { animation: shake 0.3s ease; }
 </style>
 </head>
 <body>
 <div class="container">
 
+  <nav>
+    <a class="nav-back" href="index.html">← Inicio</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-current">Adivina el producto</span>
+    <span class="nav-credito">Un proyecto de Habitante<br>y Camila Bustamante</span>
+  </nav>
+
   <header>
-    <div class="eyebrow">Existo en Relación · Habitante</div>
-    <h1>Adivina el<br><span>producto</span></h1>
+    <div class="eyebrow">Un proyecto de Habitante y Camila Bustamante</div>
+    <h1>ADIVINA EL<br><em>PRODUCTO</em></h1>
     <p class="subtitle">Cada alimento habla en primera persona. Tres intentos para adivinar cuál es — usa las pistas si necesitas ayuda.</p>
   </header>
 
   <div class="marcador-wrap">
-    <div class="marcador-item">
-      <div class="marcador-num m-correctas" id="mCorrectas">0</div>
-      <div class="marcador-lbl">Correctas</div>
-    </div>
+    <div class="marcador-item"><div class="marcador-num m-correctas" id="mCorrectas">0</div><div class="marcador-lbl">Correctas</div></div>
     <div class="marcador-sep"></div>
-    <div class="marcador-item">
-      <div class="marcador-num m-intentos" id="mRonda">1/8</div>
-      <div class="marcador-lbl">Ronda</div>
-    </div>
+    <div class="marcador-item"><div class="marcador-num m-ronda" id="mRonda">1/8</div><div class="marcador-lbl">Ronda</div></div>
     <div class="marcador-sep"></div>
-    <div class="marcador-item">
-      <div class="marcador-num m-racha" id="mRacha">0</div>
-      <div class="marcador-lbl">Racha</div>
-    </div>
+    <div class="marcador-item"><div class="marcador-num m-racha" id="mRacha">0</div><div class="marcador-lbl">Racha</div></div>
   </div>
 
   <div id="juegoWrap"></div>
@@ -223,333 +164,231 @@
 
   <footer>
     <div class="footer-logo">Existo en Relación</div>
-    <div class="footer-sub">Cartografía del tiempo y el territorio en los alimentos peruanos · Habitante, 2026</div>
+    <div class="footer-credito">Un proyecto de Habitante<br>y Camila Bustamante · Lima, 2026</div>
   </footer>
 
 </div>
 <script>
-const PRODUCTOS = [
-  {
-    nombre: 'Lúcuma',
-    especie: 'Pouteria lucuma',
-    eje: 'frutas',
-    frase: 'Soy una fruta que no termina de madurar en el árbol. Salgo al mundo para completar mi transformación — puedo esperar hasta 7 días fuera de la rama. Los valles interandinos son mi hogar desde antes del incanato.',
-    pista1: 'Altitud: 100–2 500 msnm · Piso Yunga y Quechua',
-    pista2: 'Mis tres variedades llevan nombres de ciudades andinas',
-    dato: 'Cultivada desde tiempos preincas en valles interandinos de Ayacucho, Cajamarca y Lima.',
-  },
-  {
-    nombre: 'Aguaymanto',
-    especie: 'Physalis peruviana',
-    eje: 'frutas',
-    frase: 'Mido la luz antes de florecer. Necesito más de 12 horas de sol al día para dar señal de inicio. Vengo envuelta en mi propio capuchón — una hoja que me protege del mundo.',
-    pista1: 'Altitud: 800–3 600 msnm · Piso Quechua y Suni',
-    pista2: 'Soy única en mi género en el Perú — no tengo parientes cercanos aquí',
-    dato: 'Originaria de los Andes peruanos: Cajamarca, Cusco, Puno y Huánuco.',
-  },
-  {
-    nombre: 'Chirimoya',
-    especie: 'Annona cherimola',
-    eje: 'frutas',
-    frase: 'No me apuro. Salgo del árbol antes de estar lista y termino de madurar en manos cuidadosas. Mi piel verde esconde una pulpa blanca y cremosa que muchos llaman la más fina del mundo.',
-    pista1: 'Altitud: 800–2 200 msnm · Piso Yunga',
-    pista2: 'Cosecha principal entre marzo y junio en los valles del norte peruano',
-    dato: 'Originaria de valles interandinos del norte peruano: Cajamarca, Amazonas, La Libertad.',
-  },
-  {
-    nombre: 'Palta',
-    especie: 'Persea americana',
-    eje: 'frutas',
-    frase: 'Tomo mi tiempo. Puedo quedarme en el árbol durante meses sin madurar — la rama es mi bodega. Solo cuando me separan, el tiempo empieza a correr. Perú me exporta al mundo entero.',
-    pista1: 'Altitud: 0–2 500 msnm · Costa y valles',
-    pista2: 'Perú es el segundo exportador mundial de esta fruta',
-    dato: 'Principales zonas: La Libertad, Ica y Lima. La variedad Hass domina la exportación.',
-  },
-  {
-    nombre: 'Cacao',
-    especie: 'Theobroma cacao',
-    eje: 'frutas',
-    frase: 'Necesito sombra para vivir. Crezco bajo el techo del bosque amazónico — la luz directa me perjudica. Mi nombre científico significa "alimento de los dioses". Perú tiene el 60% de mi variedad más fina del mundo.',
-    pista1: 'Altitud: 0–900 msnm · Selva alta amazónica',
-    pista2: 'Mi fermentación artesanal dura días y define mi sabor final',
-    dato: 'Zonas principales: San Martín, Cusco, Ucayali. Theobroma = alimento de los dioses.',
-  },
-  {
-    nombre: 'Maíz',
-    especie: 'Zea mays',
-    eje: 'verduras',
-    frase: 'Sincronicé civilizaciones. Mi ciclo marcó los calendarios agrícolas andinos durante miles de años — siembro con las lluvias y cosecho con su fin. En Perú existo en 52 razas distintas.',
-    pista1: 'Altitud: 500–3 500 msnm · Quechua y Suni',
-    pista2: 'Una de mis variedades es morada y se usa para hacer una bebida tradicional',
-    dato: 'Siembra con el inicio de lluvias (oct–nov), cosecha con su fin (abr–may). 52 razas en Perú.',
-  },
-  {
-    nombre: 'Tomate',
-    especie: 'Solanum lycopersicum',
-    eje: 'verduras',
-    frase: 'Soy un termómetro viviente. A 25°C maduro en 4 semanas; a 15°C necesito el doble. La temperatura decide mi eficiencia. Perú tiene mis ancestros silvestres en la costa central.',
-    pista1: 'Altitud: 0–2 000 msnm · Costa principalmente',
-    pista2: 'Mis variedades en Perú incluyen una redonda, una larga y una pequeña',
-    dato: 'Producción continua en costa con picos en verano y otoño. Variedades: Pimiento, Chonto, Cherry.',
-  },
-  {
-    nombre: 'Lechuga',
-    especie: 'Lactuca sativa',
-    eje: 'verduras',
-    frase: 'No espero. Mi ciclo completo dura apenas 60 a 90 días — uno de los más cortos del reino vegetal. Eso me permite estar disponible los 12 meses del año en cualquier altitud del Perú.',
-    pista1: 'Altitud: 0–3 000 msnm · Todo el territorio peruano',
-    pista2: 'Si el calor sube demasiado, saco una espiga y dejo de producir hojas',
-    dato: 'Su ciclo corto permite escalonar la producción durante los 12 meses del año.',
-  },
-  {
-    nombre: 'Espinaca',
-    especie: 'Spinacia oleracea',
-    eje: 'verduras',
-    frase: 'Mido el frío con precisión. Si la temperatura supera los 25°C, me espigo prematuramente y dejo de ser útil. Soy una hoja de invierno — mi mejor momento es entre abril y septiembre.',
-    pista1: 'Altitud: 0–3 000 msnm · Mejor en otoño e invierno',
-    pista2: 'Existo en dos variedades: una de hoja lisa y una de hoja rizada',
-    dato: 'Adaptada a valles peruanos. Mejor en estación fresca: abril a septiembre.',
-  },
-  {
-    nombre: 'Quinua',
-    especie: 'Chenopodium quinoa',
-    eje: 'granos',
-    frase: 'Mido el frío extremo. Sobrevivo heladas de hasta −8°C sin rendirme. Nací en el altiplano del lago más alto del mundo hace más de 5 000 años. Soy el único grano con proteína completa — los 9 aminoácidos esenciales.',
-    pista1: 'Altitud: 2 800–4 200 msnm · Puna y Suni',
-    pista2: 'La FAO me dedicó un año internacional entero en 2013',
-    dato: 'Domesticada hace 5 000–7 000 años en el altiplano del lago Titicaca. 3 000+ variedades en Perú.',
-  },
-  {
-    nombre: 'Kiwicha',
-    especie: 'Amaranthus caudatus',
-    eje: 'granos',
-    frase: 'Florezco con días cortos — el fotoperiodismo me activa cuando el sol dura menos horas. Vivo en la altitud media andina y soy rico en un aminoácido que escasea en otros granos: la lisina.',
-    pista1: 'Altitud: 1 000–3 200 msnm · Quechua y Suni',
-    pista2: 'Tengo entre 16 y 18% de proteína — más que el trigo y el arroz',
-    dato: 'Domesticada en los Andes hace 4 000–6 000 años. Alta en lisina.',
-  },
-  {
-    nombre: 'Papa',
-    especie: 'Solanum tuberosum',
-    eje: 'raices',
-    frase: 'Soy el tiempo. Existe una versión de mí que es tiempo congelado — me deshidratan con las heladas nocturnas y el sol del día, y así me conservan por años. Perú es mi centro de origen: aquí nací hace 7 000 a 10 000 años.',
-    pista1: 'Altitud: 100–4 200 msnm · El rango altitudinal más amplio de todos',
-    pista2: 'En Perú existo en más de 4 000 variedades nativas',
-    dato: 'Perú es el principal centro de origen mundial. 711 313 familias productoras.',
-  },
-  {
-    nombre: 'Camote',
-    especie: 'Ipomoea batatas',
-    eje: 'raices',
-    frase: 'Viajé. Mucho antes de la conquista española, cruce el Océano Pacífico y llegué a Polinesia — los navegantes peruanos me llevaron. Soy resistente a la sequía y puedo ser naranja, blanco o morado.',
-    pista1: 'Altitud: 0–2 500 msnm · Costa y valles',
-    pista2: 'Mi variedad morada es especialmente alta en antioxidantes',
-    dato: 'Domesticado en América tropical. Evidencias arqueológicas en Perú desde 2500 a.C.',
-  },
-  {
-    nombre: 'Oca',
-    especie: 'Oxalis tuberosa',
-    eje: 'raices',
-    frase: 'El sol me transforma. Cuando me cosechan, no estoy lista — necesito 1 a 2 semanas expuesta al sol para que mis almidones se conviertan en azúcares. Solo entonces me vuelvo dulce. Vivo sobre los 3 000 metros.',
-    pista1: 'Altitud: 3 000–4 100 msnm · Puna andina',
-    pista2: 'Soy el segundo tubérculo andino más importante, después de mi vecina más famosa',
-    dato: 'Domesticada en los altos Andes. Requiere exposición solar poscosecha para endulzar.',
-  },
-];
-
-const COLORES_EJE = {
-  frutas:   '#C45A35',
-  verduras: '#4A8A22',
-  granos:   '#C87A18',
-  raices:   '#1A5A9A',
-};
-
 const LETRAS = ['A','B','C','D'];
-const TOTAL_RONDAS = 8;
+const TOTAL  = 8;
 
-let orden = [];
-let rondaActual = 0;
-let correctas = 0;
-let racha = 0;
-let intentos = 0;
-let pistasUsadas = 0;
-let respondido = false;
-let historial = [];
+const PRODUCTOS = [
+  { nombre:'Lúcuma',     eje:'frutas',
+    frase:'Soy una fruta que no termina de madurar en el árbol. Salgo al mundo para completar mi transformación — puedo esperar hasta 7 días fuera de la rama. Los valles interandinos son mi hogar desde antes del incanato.',
+    pista1:'Altitud: 100–2 500 msnm · Piso Yunga y Quechua',
+    pista2:'Mis tres variedades llevan nombres de ciudades andinas',
+    dato:'Cultivada desde tiempos preincas en Ayacucho, Cajamarca y Lima.' },
+
+  { nombre:'Aguaymanto', eje:'frutas',
+    frase:'Mido la luz antes de florecer. Necesito más de 12 horas de sol al día para dar señal de inicio. Vengo envuelta en mi propio capuchón — una hoja que me protege del mundo.',
+    pista1:'Altitud: 800–3 600 msnm · Piso Quechua y Suni',
+    pista2:'Soy único en mi género en el Perú — no tengo parientes cercanos aquí',
+    dato:'Originario de los Andes peruanos: Cajamarca, Cusco, Puno y Huánuco.' },
+
+  { nombre:'Chirimoya',  eje:'frutas',
+    frase:'No me apuro. Salgo del árbol antes de estar lista y termino de madurar en manos cuidadosas. Mi piel verde esconde una pulpa blanca y cremosa que muchos llaman la más fina del mundo.',
+    pista1:'Altitud: 800–2 200 msnm · Piso Yunga',
+    pista2:'Cosecha principal entre marzo y junio en los valles del norte peruano',
+    dato:'Originaria de los valles interandinos del norte: Cajamarca, Amazonas y La Libertad.' },
+
+  { nombre:'Palta',      eje:'frutas',
+    frase:'Tomo mi tiempo. Puedo quedarme en el árbol durante meses sin madurar — la rama es mi bodega. Solo cuando me separan, el tiempo empieza a correr. Perú me exporta al mundo entero.',
+    pista1:'Altitud: 0–2 500 msnm · Costa y valles',
+    pista2:'Perú es el segundo exportador mundial de esta fruta',
+    dato:'Principales zonas: La Libertad, Ica y Lima. La variedad Hass domina la exportación.' },
+
+  { nombre:'Cacao',      eje:'frutas',
+    frase:'Necesito sombra para vivir. Crezco bajo el techo del bosque amazónico — la luz directa me perjudica. Mi nombre científico significa "alimento de los dioses". Perú tiene el 60% de mi variedad más fina del mundo.',
+    pista1:'Altitud: 0–900 msnm · Selva alta amazónica',
+    pista2:'Mi fermentación artesanal dura días y define mi sabor final',
+    dato:'Zonas principales: San Martín, Cusco y Ucayali.' },
+
+  { nombre:'Maíz',       eje:'verduras',
+    frase:'Sincronicé civilizaciones. Mi ciclo marcó los calendarios agrícolas andinos durante miles de años — siembro con las lluvias y cosecho con su fin. En Perú existo en 52 razas distintas.',
+    pista1:'Altitud: 500–3 500 msnm · Quechua y Suni',
+    pista2:'Una de mis variedades es morada y se usa para hacer una bebida tradicional',
+    dato:'Siembra oct–nov con el inicio de lluvias, cosecha abr–may con su fin.' },
+
+  { nombre:'Tomate',     eje:'verduras',
+    frase:'Soy un termómetro viviente. A 25°C maduro en 4 semanas; a 15°C necesito el doble. La temperatura decide mi eficiencia. Perú tiene mis ancestros silvestres en la costa central.',
+    pista1:'Altitud: 0–2 000 msnm · Costa principalmente',
+    pista2:'Mis variedades en Perú incluyen una redonda, una larga y una pequeña',
+    dato:'Producción continua en costa con picos en verano y otoño.' },
+
+  { nombre:'Lechuga',    eje:'verduras',
+    frase:'No espero. Mi ciclo completo dura apenas 60 a 90 días — uno de los más cortos del reino vegetal. Eso me permite estar disponible los 12 meses del año en cualquier altitud del Perú.',
+    pista1:'Altitud: 0–3 000 msnm · Todo el territorio peruano',
+    pista2:'Si el calor sube demasiado, saco una espiga y dejo de producir hojas',
+    dato:'Su ciclo corto permite escalonar la producción durante los 12 meses del año.' },
+
+  { nombre:'Espinaca',   eje:'verduras',
+    frase:'Mido el frío con precisión. Si la temperatura supera los 25°C, me espigo prematuramente y dejo de ser útil. Soy una hoja de invierno — mi mejor momento es entre abril y septiembre.',
+    pista1:'Altitud: 0–3 000 msnm · Mejor en otoño e invierno',
+    pista2:'Existo en dos variedades: una de hoja lisa y una de hoja rizada',
+    dato:'Adaptada a valles peruanos. Mejor en estación fresca: abril a septiembre.' },
+
+  { nombre:'Quinua',     eje:'granos',
+    frase:'Mido el frío extremo. Sobrevivo heladas de hasta −8°C sin rendirme. Nací en el altiplano del lago más alto del mundo hace más de 5 000 años. Soy el único grano con proteína completa — los 9 aminoácidos esenciales.',
+    pista1:'Altitud: 2 800–4 200 msnm · Puna y Suni',
+    pista2:'La FAO me dedicó un año internacional entero en 2013',
+    dato:'Domesticada hace 5 000–7 000 años en el altiplano del lago Titicaca. 3 000+ variedades.' },
+
+  { nombre:'Kiwicha',    eje:'granos',
+    frase:'Florezco con días cortos — el fotoperiodismo me activa cuando el sol dura menos horas. Vivo en la altitud media andina y soy rico en un aminoácido que escasea en otros granos: la lisina.',
+    pista1:'Altitud: 1 000–3 200 msnm · Quechua y Suni',
+    pista2:'Tengo entre 16 y 18% de proteína — más que el trigo y el arroz',
+    dato:'Domesticada en los Andes hace 4 000–6 000 años. Alta en lisina.' },
+
+  { nombre:'Papa',       eje:'raices',
+    frase:'Soy el tiempo. Existe una versión de mí que es tiempo congelado — me deshidratan con heladas nocturnas y sol del día, y así me conservan por años. Perú es mi centro de origen: aquí nací hace 7 000 a 10 000 años.',
+    pista1:'Altitud: 100–4 200 msnm · El rango altitudinal más amplio de todos',
+    pista2:'En Perú existo en más de 4 000 variedades nativas',
+    dato:'Perú: principal centro de origen mundial. 711 313 familias productoras.' },
+
+  { nombre:'Camote',     eje:'raices',
+    frase:'Viajé. Mucho antes de la conquista española, crucé el Océano Pacífico y llegué a Polinesia — los navegantes peruanos me llevaron. Soy resistente a la sequía y puedo ser naranja, blanco o morado.',
+    pista1:'Altitud: 0–2 500 msnm · Costa y valles',
+    pista2:'Mi variedad morada es especialmente alta en antioxidantes',
+    dato:'Domesticado en América tropical. Evidencias arqueológicas en Perú desde 2500 a.C.' },
+
+  { nombre:'Oca',        eje:'raices',
+    frase:'El sol me transforma. Cuando me cosechan, no estoy lista — necesito 1 a 2 semanas expuesta al sol para que mis almidones se conviertan en azúcares. Solo entonces me vuelvo dulce. Vivo sobre los 3 000 metros.',
+    pista1:'Altitud: 3 000–4 100 msnm · Puna andina',
+    pista2:'Soy el segundo tubérculo andino más importante, después de mi vecina más famosa',
+    dato:'Domesticada en los altos Andes. Requiere exposición solar poscosecha para endulzar.' },
+];
 
 function mezclar(arr) {
   const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
+  for (let i = a.length-1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
   return a;
 }
 
+let orden = [], ronda = 0, correctas = 0, racha = 0, respondido = false, pistasUsadas = 0, historial = [];
+
 function iniciar() {
-  orden = mezclar(PRODUCTOS).slice(0, TOTAL_RONDAS);
-  rondaActual = 0;
-  correctas = 0;
-  racha = 0;
-  historial = [];
+  orden = mezclar(PRODUCTOS).slice(0, TOTAL);
+  ronda = 0; correctas = 0; racha = 0; historial = [];
   actualizarMarcador();
+  document.getElementById('finalWrap').style.display = 'none';
+  document.getElementById('finalWrap').innerHTML = '';
   renderRonda();
 }
 
 function actualizarMarcador() {
   document.getElementById('mCorrectas').textContent = correctas;
-  document.getElementById('mRonda').textContent = (rondaActual + 1) + '/' + TOTAL_RONDAS;
+  document.getElementById('mRonda').textContent = (ronda + 1) + '/' + TOTAL;
   document.getElementById('mRacha').textContent = racha;
 }
 
 function generarOpciones(correcto) {
-  const otros = PRODUCTOS.filter(p => p.nombre !== correcto.nombre);
-  const distractores = mezclar(otros).slice(0, 3);
-  return mezclar([correcto, ...distractores]);
+  const otros = mezclar(PRODUCTOS.filter(p => p.nombre !== correcto.nombre)).slice(0, 3);
+  return mezclar([correcto, ...otros]);
 }
 
 function renderRonda() {
-  if (rondaActual >= TOTAL_RONDAS) { mostrarFinal(); return; }
-
-  intentos = 0;
-  pistasUsadas = 0;
-  respondido = false;
-  const prod = orden[rondaActual];
+  if (ronda >= TOTAL) { mostrarFinal(); return; }
+  respondido = false; pistasUsadas = 0;
+  const prod = orden[ronda];
   const opciones = generarOpciones(prod);
-
   actualizarMarcador();
 
   const wrap = document.getElementById('juegoWrap');
-  wrap.style.animation = 'none';
-  void wrap.offsetWidth;
-  wrap.style.animation = 'fadeUp 0.4s ease both';
-
+  wrap.style.animation = 'none'; void wrap.offsetWidth; wrap.style.animation = 'fadeUp 0.4s ease both';
   wrap.innerHTML = `
     <div class="ronda-info">
-      <div class="ronda-num">Ronda ${rondaActual + 1} de ${TOTAL_RONDAS}</div>
+      <div class="ronda-num">Ronda ${ronda + 1} de ${TOTAL}</div>
       <div class="vidas-wrap">
         <div class="vida" id="v1"></div>
         <div class="vida" id="v2"></div>
         <div class="vida" id="v3"></div>
       </div>
     </div>
-
     <div class="frase-card">
       <div class="frase-label">¿Qué alimento habla así?</div>
-      <div class="frase-texto" id="fraseTexto">${prod.frase}</div>
+      <div class="frase-texto">${prod.frase}</div>
     </div>
-
     <div class="pistas-wrap">
-      <button class="pista-btn" id="pista1Btn" onclick="usarPista(1)">↯ Pista 1: altitud</button>
-      <button class="pista-btn" id="pista2Btn" onclick="usarPista(2)">↯ Pista 2: dato extra</button>
+      <button class="pista-btn" id="p1btn" onclick="usarPista(1)">↯ Pista 1 — altitud</button>
+      <button class="pista-btn" id="p2btn" onclick="usarPista(2)">↯ Pista 2 — dato extra</button>
     </div>
-
     <div class="pista-visible" id="pistaVisible"></div>
-
-    <div class="opciones-grid" id="opcionesGrid">
+    <div class="opciones-grid">
       ${opciones.map((o, i) => `
-        <button class="opcion-btn" id="opc${i}" onclick="elegir(${i}, '${o.nombre}', '${prod.nombre}')">
+        <button class="opcion-btn" id="opc${i}" onclick="elegir(${i},'${o.nombre}','${prod.nombre}')">
           <div class="opcion-letra">${LETRAS[i]}</div>
           <span>${o.nombre}</span>
-        </button>
-      `).join('')}
+        </button>`).join('')}
     </div>
-
     <div class="feedback" id="feedback"></div>
     <button class="btn-siguiente" id="btnSig" onclick="siguiente()">
-      ${rondaActual + 1 < TOTAL_RONDAS ? '→ Siguiente producto' : '→ Ver resultado final'}
-    </button>
-  `;
+      ${ronda + 1 < TOTAL ? '→ Siguiente producto' : '→ Ver resultado final'}
+    </button>`;
 
-  // Guardar referencia del producto actual
   wrap.dataset.correcto = prod.nombre;
-  wrap.dataset.pista1 = prod.pista1;
-  wrap.dataset.pista2 = prod.pista2;
-  wrap.dataset.dato = prod.dato;
+  wrap.dataset.pista1   = prod.pista1;
+  wrap.dataset.pista2   = prod.pista2;
+  wrap.dataset.dato     = prod.dato;
 }
+
+let intentos = 0;
+
+function renderRonda_reset() { intentos = 0; renderRonda(); }
 
 function usarPista(num) {
   if (respondido) return;
   const wrap = document.getElementById('juegoWrap');
-  const pv = document.getElementById('pistaVisible');
-  const btn = document.getElementById('pista' + num + 'Btn');
-
-  if (num === 1) {
-    pv.textContent = '↯ ' + wrap.dataset.pista1;
-    document.getElementById('v1').classList.add('perdida');
-  } else {
-    pv.textContent = '↯ ' + wrap.dataset.pista2;
-    document.getElementById('v2').classList.add('perdida');
-  }
-
+  const pv   = document.getElementById('pistaVisible');
+  const btn  = document.getElementById('p' + num + 'btn');
+  pv.textContent = '↯ ' + (num === 1 ? wrap.dataset.pista1 : wrap.dataset.pista2);
   pv.classList.add('show');
   btn.classList.add('usada');
   btn.disabled = true;
+  const vidaIdx = num;
+  document.getElementById('v' + vidaIdx).classList.add('perdida');
   pistasUsadas++;
 }
 
 function elegir(idx, elegido, correcto) {
   if (respondido) return;
   intentos++;
-
-  const btn = document.getElementById('opc' + idx);
-  const fb = document.getElementById('feedback');
+  const btn  = document.getElementById('opc' + idx);
+  const fb   = document.getElementById('feedback');
   const wrap = document.getElementById('juegoWrap');
 
   if (elegido === correcto) {
     respondido = true;
     btn.classList.add('correcta');
-    correctas++;
-    racha++;
-
-    const prod = orden[rondaActual];
-    historial.push({ nombre: prod.nombre, frase: prod.frase, correcto: true });
-
-    let msg = '';
-    if (intentos === 1 && pistasUsadas === 0) {
-      msg = `<strong>¡Perfecto!</strong> Sin pistas y al primer intento. ${wrap.dataset.dato}`;
-    } else if (intentos === 1) {
-      msg = `<strong>¡Correcto!</strong> ${wrap.dataset.dato}`;
-    } else {
-      msg = `<strong>¡Correcto!</strong> ${wrap.dataset.dato}`;
-    }
-
+    correctas++; racha++;
+    historial.push({ nombre: correcto, frase: orden[ronda].frase, correcto: true });
     fb.className = 'feedback correcto';
-    fb.innerHTML = msg;
-    document.getElementById('v' + (3 - (3 - intentos))).classList.add('perdida');
+    fb.innerHTML = `<strong>¡Correcto!</strong> ${wrap.dataset.dato}`;
     document.getElementById('btnSig').classList.add('show');
+    deshabilitarTodo();
     actualizarMarcador();
-    deshabilitarOpciones();
-
   } else {
     btn.classList.add('incorrecta');
     btn.disabled = true;
+    const vidaId = pistasUsadas + intentos;
+    const vidaEl = document.getElementById('v' + vidaId);
+    if (vidaEl) vidaEl.classList.add('perdida');
 
-    const vida = document.getElementById('v' + intentos);
-    if (vida) vida.classList.add('perdida');
-
-    if (intentos >= 3) {
-      respondido = true;
-      racha = 0;
-      const prod = orden[rondaActual];
-      historial.push({ nombre: prod.nombre, frase: prod.frase, correcto: false });
-
+    if (intentos >= 3 - pistasUsadas || (pistasUsadas + intentos) >= 3) {
+      respondido = true; racha = 0;
+      historial.push({ nombre: correcto, frase: orden[ronda].frase, correcto: false });
       fb.className = 'feedback agotado';
       fb.innerHTML = `<strong>Era ${correcto}.</strong> ${wrap.dataset.dato}`;
       document.getElementById('btnSig').classList.add('show');
-      actualizarMarcador();
-      deshabilitarOpciones();
-
-      // Mostrar correcta
-      const btns = document.querySelectorAll('.opcion-btn');
-      btns.forEach(b => {
-        if (b.querySelector('span') && b.querySelector('span').textContent === correcto) {
-          b.classList.add('correcta');
-        }
+      deshabilitarTodo();
+      // Resaltar correcta
+      document.querySelectorAll('.opcion-btn').forEach(b => {
+        if (b.querySelector('span')?.textContent === correcto) b.classList.add('correcta');
       });
+      actualizarMarcador();
     } else {
       fb.className = 'feedback incorrecto';
-      fb.innerHTML = `<strong>No es ${elegido}.</strong> Quedan ${3 - intentos} ${3 - intentos === 1 ? 'intento' : 'intentos'}.`;
-      // shake
+      const restantes = (3 - pistasUsadas) - intentos;
+      fb.innerHTML = `<strong>No es ${elegido}.</strong> Quedan ${restantes} ${restantes === 1 ? 'intento' : 'intentos'}.`;
       const card = document.querySelector('.frase-card');
       card.classList.add('shake');
       setTimeout(() => card.classList.remove('shake'), 300);
@@ -557,61 +396,55 @@ function elegir(idx, elegido, correcto) {
   }
 }
 
-function deshabilitarOpciones() {
+function deshabilitarTodo() {
   document.querySelectorAll('.opcion-btn').forEach(b => b.disabled = true);
-  document.getElementById('pista1Btn').disabled = true;
-  document.getElementById('pista2Btn').disabled = true;
+  document.getElementById('p1btn').disabled = true;
+  document.getElementById('p2btn').disabled = true;
 }
 
 function siguiente() {
-  rondaActual++;
-  if (rondaActual >= TOTAL_RONDAS) {
-    mostrarFinal();
-  } else {
-    renderRonda();
-  }
+  ronda++;
+  intentos = 0;
+  renderRonda();
 }
 
 function mostrarFinal() {
   document.getElementById('juegoWrap').innerHTML = '';
-  document.getElementById('mRonda').textContent = TOTAL_RONDAS + '/' + TOTAL_RONDAS;
-
+  document.getElementById('mRonda').textContent = TOTAL + '/' + TOTAL;
   const final = document.getElementById('finalWrap');
   final.style.display = 'block';
+  const pct = Math.round((correctas / TOTAL) * 100);
+  const msgs = [
+    'El territorio tiene muchas capas. Vuelve a intentarlo.',
+    'Vas conociendo el territorio. Cada frase es una puerta.',
+    'Tienes un oído relacional muy afinado.',
+    'Conoces cada relación de memoria. Los alimentos te hablan.',
+  ];
+  const msg = correctas <= 3 ? msgs[0] : correctas <= 5 ? msgs[1] : correctas <= 7 ? msgs[2] : msgs[3];
 
-  const pct = Math.round((correctas / TOTAL_RONDAS) * 100);
-  let mensaje = '';
-  if (correctas === TOTAL_RONDAS) mensaje = 'Conoces cada relación de memoria. Los alimentos te hablan.';
-  else if (correctas >= 6) mensaje = 'Tienes un oído relacional muy afinado. Sigues aprendiendo.';
-  else if (correctas >= 4) mensaje = 'Vas conociendo el territorio. Cada frase es una puerta.';
-  else mensaje = 'El territorio tiene muchas capas. Vuelve a intentarlo.';
-
-  const frasesHistorial = historial.slice(0, 4).map(h =>
-    `<div class="frase-mini"><strong>${h.nombre}</strong> ${h.correcto ? '✓' : '✗'} — ${h.frase}</div>`
+  const frases = historial.slice(0, 4).map(h =>
+    `<div class="frase-mini"><strong>${h.nombre}</strong> ${h.correcto ? '✓' : '✗'} — ${h.frase.slice(0, 80)}...</div>`
   ).join('');
 
   final.innerHTML = `
     <div class="final-score">
       <div class="final-label">Resultado final</div>
       <div class="final-num">${correctas}</div>
-      <div class="final-de">de ${TOTAL_RONDAS} correctas · ${pct}%</div>
-      <div class="final-mensaje">${mensaje}</div>
+      <div class="final-de">de ${TOTAL} correctas · ${pct}%</div>
+      <div class="final-mensaje">${msg}</div>
     </div>
-    <div class="final-frases">
-      <div class="final-frases-titulo">Frases de esta partida</div>
-      ${frasesHistorial}
+    <div class="sec-card">
+      <div class="sec-titulo">Frases de esta partida</div>
+      ${frases}
     </div>
-    <button class="btn-reiniciar" onclick="reiniciar()">→ Jugar de nuevo</button>
-  `;
+    <button class="btn-reiniciar" onclick="reiniciar()">→ Jugar de nuevo</button>`;
 
-  final.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  final.scrollIntoView({ behavior:'smooth', block:'start' });
 }
 
 function reiniciar() {
-  document.getElementById('finalWrap').style.display = 'none';
-  document.getElementById('finalWrap').innerHTML = '';
   iniciar();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top:0, behavior:'smooth' });
 }
 
 iniciar();
