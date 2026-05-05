@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adivina el producto — Existo en Relación</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0F07;
+    --bg2: #111808;
+    --verde: #8BC34A;
+    --verde-dim: #2D4A10;
+    --verde-light: #BEDD80;
+    --crema: #F0EAD6;
+    --crema-dim: #A09880;
+    --text-sec: #607050;
+    --card: #161E0E;
+    --card-b: #222E14;
+    --rojo: #E05030;
+    --ambar: #E8A020;
+    --azul: #3A90D0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--crema); font-family: 'Outfit', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(139,195,74,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .container { max-width: 620px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  header { text-align: center; margin-bottom: 48px; animation: fadeUp 0.6s ease both; }
+  .eyebrow { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-sec); margin-bottom: 14px; }
+  h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 6vw, 46px); font-weight: 800; line-height: 1.05; color: var(--crema); margin-bottom: 10px; }
+  h1 span { color: var(--verde); }
+  .subtitle { font-size: 13px; color: var(--text-sec); line-height: 1.7; max-width: 360px; margin: 0 auto; }
+
+  /* MARCADOR */
+  .marcador-wrap { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; animation: fadeUp 0.6s 0.1s ease both; }
+  .marcador-item { text-align: center; }
+  .marcador-num { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 700; line-height: 1; }
+  .marcador-lbl { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-sec); margin-top: 3px; }
+  .marcador-sep { width: 1px; height: 32px; background: var(--card-b); }
+  .m-correctas { color: var(--verde); }
+  .m-intentos  { color: var(--ambar); }
+  .m-racha     { color: var(--verde-light); }
+
+  /* JUEGO */
+  #juegoWrap { animation: fadeUp 0.5s ease both; }
+
+  /* Contador de ronda */
+  .ronda-info { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .ronda-num { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-sec); }
+  .vidas-wrap { display: flex; gap: 6px; }
+  .vida { width: 10px; height: 10px; border-radius: 50%; background: var(--verde); transition: background 0.3s; }
+  .vida.perdida { background: var(--card-b); }
+
+  /* Card de frase */
+  .frase-card {
+    background: var(--card);
+    border: 1px solid var(--card-b);
+    border-radius: 20px;
+    padding: 36px 32px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .frase-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--verde-dim), transparent);
+  }
+  .frase-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-sec); margin-bottom: 16px; }
+  .frase-texto {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(18px, 4vw, 26px);
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--crema);
+  }
+  .frase-texto .oculto { color: var(--verde-dim); letter-spacing: 0.08em; }
+
+  /* Pistas */
+  .pistas-wrap { display: flex; gap: 8px; margin-bottom: 20px; }
+  .pista-btn {
+    flex: 1; background: var(--card); border: 1px solid var(--card-b);
+    border-radius: 10px; padding: 10px 8px; cursor: pointer;
+    font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 500;
+    color: var(--text-sec); letter-spacing: 0.06em; text-transform: uppercase;
+    transition: all 0.2s; text-align: center;
+  }
+  .pista-btn:hover:not(:disabled) { border-color: var(--ambar); color: var(--ambar); }
+  .pista-btn:disabled { opacity: 0.3; cursor: default; }
+  .pista-btn.usada { border-color: var(--ambar); color: var(--ambar); background: rgba(232,160,32,0.06); }
+
+  /* Pista visible */
+  .pista-visible {
+    background: rgba(232,160,32,0.08);
+    border: 1px solid rgba(232,160,32,0.2);
+    border-radius: 10px; padding: 10px 14px;
+    font-size: 12px; color: var(--ambar);
+    margin-bottom: 16px;
+    display: none;
+    animation: fadeUp 0.3s ease both;
+  }
+  .pista-visible.show { display: block; }
+
+  /* Opciones */
+  .opciones-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+  .opcion-btn {
+    background: var(--card); border: 1.5px solid var(--card-b);
+    border-radius: 12px; padding: 14px 16px;
+    font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 400;
+    color: var(--crema); cursor: pointer; transition: all 0.2s;
+    text-align: left; display: flex; align-items: center; gap: 10px;
+  }
+  .opcion-btn:hover:not(:disabled) { border-color: var(--verde); background: rgba(139,195,74,0.06); transform: translateY(-1px); }
+  .opcion-btn:disabled { cursor: default; }
+  .opcion-btn.correcta { border-color: var(--verde)!important; background: rgba(139,195,74,0.12)!important; color: var(--verde-light)!important; }
+  .opcion-btn.incorrecta { border-color: var(--rojo)!important; background: rgba(224,80,48,0.08)!important; color: #E08070!important; }
+  .opcion-letra {
+    width: 26px; height: 26px; border-radius: 6px;
+    background: var(--bg2); border: 1px solid var(--card-b);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--text-sec);
+    flex-shrink: 0; transition: all 0.2s;
+  }
+  .opcion-btn.correcta  .opcion-letra { background: var(--verde); border-color: var(--verde); color: #000; }
+  .opcion-btn.incorrecta .opcion-letra { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+
+  /* Feedback */
+  .feedback {
+    border-radius: 12px; padding: 16px 20px;
+    font-size: 13px; line-height: 1.6;
+    margin-bottom: 16px; display: none;
+    animation: fadeUp 0.3s ease both;
+  }
+  .feedback.correcto { background: rgba(139,195,74,0.1); border: 1px solid rgba(139,195,74,0.25); color: var(--verde-light); display: block; }
+  .feedback.incorrecto { background: rgba(224,80,48,0.08); border: 1px solid rgba(224,80,48,0.2); color: #E09080; display: block; }
+  .feedback.agotado { background: rgba(232,160,32,0.08); border: 1px solid rgba(232,160,32,0.2); color: var(--ambar); display: block; }
+  .feedback strong { font-weight: 500; }
+
+  /* Botón siguiente */
+  .btn-siguiente {
+    width: 100%; background: var(--verde-dim); border: 1px solid var(--verde);
+    border-radius: 12px; padding: 15px; font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700; color: var(--verde-light);
+    cursor: pointer; transition: all 0.2s; letter-spacing: 0.06em;
+    display: none; text-transform: uppercase;
+  }
+  .btn-siguiente:hover { background: var(--verde); color: #0A0F07; }
+  .btn-siguiente.show { display: block; animation: fadeUp 0.3s ease both; }
+
+  /* PANTALLA FINAL */
+  #finalWrap { display: none; animation: fadeUp 0.6s ease both; }
+  .final-score {
+    text-align: center;
+    background: var(--card); border: 1px solid var(--card-b);
+    border-radius: 24px; padding: 48px 32px; margin-bottom: 24px;
+  }
+  .final-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-sec); margin-bottom: 12px; }
+  .final-num { font-family: 'Syne', sans-serif; font-size: clamp(60px, 14vw, 96px); font-weight: 800; color: var(--verde); line-height: 1; margin-bottom: 8px; }
+  .final-de { font-size: 16px; color: var(--text-sec); margin-bottom: 20px; }
+  .final-mensaje { font-size: 15px; color: var(--crema-dim); line-height: 1.7; max-width: 380px; margin: 0 auto; }
+
+  .final-frases { margin-bottom: 24px; }
+  .final-frases-titulo { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-sec); margin-bottom: 12px; }
+  .frase-mini { background: var(--card); border: 1px solid var(--card-b); border-radius: 10px; padding: 12px 16px; margin-bottom: 8px; font-size: 12px; color: var(--crema-dim); line-height: 1.5; }
+  .frase-mini strong { color: var(--verde-light); font-weight: 500; }
+
+  .btn-reiniciar {
+    width: 100%; background: var(--verde); border: none;
+    border-radius: 12px; padding: 16px; font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700; color: #0A0F07; cursor: pointer;
+    transition: all 0.2s; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .btn-reiniciar:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(139,195,74,0.3); }
+
+  footer { margin-top: 60px; padding-top: 28px; border-top: 1px solid var(--card-b); text-align: center; }
+  .footer-logo { font-family: 'Syne', sans-serif; font-size: 13px; color: var(--verde); margin-bottom: 4px; }
+  .footer-sub { font-size: 11px; color: var(--text-sec); }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+  .shake { animation: shake 0.3s ease; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">Existo en Relación · Habitante</div>
+    <h1>Adivina el<br><span>producto</span></h1>
+    <p class="subtitle">Una frase relacional, tres intentos. ¿Reconoces el alimento que la pronuncia?</p>
+  </header>
+
+  <div class="marcador-wrap">
+    <div class="marcador-item">
+      <div class="marcador-num m-correctas" id="mCorrectas">0</div>
+      <div class="marcador-lbl">Correctas</div>
+    </div>
+    <div class="marcador-sep"></div>
+    <div class="marcador-item">
+      <div class="marcador-num m-intentos" id="mRonda">1/8</div>
+      <div class="marcador-lbl">Ronda</div>
+    </div>
+    <div class="marcador-sep"></div>
+    <div class="marcador-item">
+      <div class="marcador-num m-racha" id="mRacha">0</div>
+      <div class="marcador-lbl">Racha</div>
+    </div>
+  </div>
+
+  <div id="juegoWrap"></div>
+  <div id="finalWrap"></div>
+
+  <footer>
+    <div class="footer-logo">Existo en Relación</div>
+    <div class="footer-sub">Cartografía del tiempo y el territorio en los alimentos peruanos · Habitante, 2026</div>
+  </footer>
+
+</div>
+<script>
+const PRODUCTOS = [
+  {
+    nombre: 'Lúcuma',
+    especie: 'Pouteria lucuma',
+    eje: 'frutas',
+    frase: '"La lúcuma espera." Madura fuera del árbol hasta 7 días.',
+    pista1: 'Altitud: 100–2 500 msnm · Piso Yunga y Quechua',
+    pista2: 'Tiene tres variedades: Sede, Molle y Beltrán',
+    dato: 'Cultivada desde tiempos preincas en valles interandinos de Ayacucho, Cajamarca y Lima.',
+  },
+  {
+    nombre: 'Aguaymanto',
+    especie: 'Physalis peruviana',
+    eje: 'frutas',
+    frase: '"El aguaymanto mide la luz." Su floración responde a más de 12 horas de sol.',
+    pista1: 'Altitud: 800–3 600 msnm · Piso Quechua y Suni',
+    pista2: 'Florece en verano (dic–mar) por fotoperiodo',
+    dato: 'Único en su género en el Perú. Originario de Cajamarca, Cusco, Puno y Huánuco.',
+  },
+  {
+    nombre: 'Chirimoya',
+    especie: 'Annona cherimola',
+    eje: 'frutas',
+    frase: '"La chirimoya no se apura." Madura fuera del árbol con manejo cuidadoso.',
+    pista1: 'Altitud: 800–2 200 msnm · Piso Yunga',
+    pista2: 'Cosecha principal entre marzo y junio',
+    dato: 'Originaria de los valles interandinos del norte peruano: Cajamarca, Amazonas, La Libertad.',
+  },
+  {
+    nombre: 'Palta',
+    especie: 'Persea americana',
+    eje: 'frutas',
+    frase: '"La palta toma su tiempo." Puede permanecer en el árbol meses sin madurar — el árbol es su bodega.',
+    pista1: 'Altitud: 0–2 500 msnm · Costa y valles',
+    pista2: 'Perú es el segundo exportador mundial',
+    dato: 'Principales zonas: La Libertad, Ica y Lima. La variedad Hass domina la exportación.',
+  },
+  {
+    nombre: 'Cacao',
+    especie: 'Theobroma cacao',
+    eje: 'frutas',
+    frase: '"El cacao necesita sombra." Crece bajo el dosel del bosque — la selva es su techo.',
+    pista1: 'Altitud: 0–900 msnm · Selva alta',
+    pista2: 'Perú tiene el 60% del cacao fino de aroma del mundo',
+    dato: 'Theobroma = alimento de los dioses. Zonas: San Martín, Cusco, Ucayali.',
+  },
+  {
+    nombre: 'Maíz',
+    especie: 'Zea mays',
+    eje: 'verduras',
+    frase: '"El maíz sincroniza civilizaciones." Su ciclo marcó calendarios agrícolas andinos durante milenios.',
+    pista1: 'Altitud: 500–3 500 msnm · Quechua y Suni',
+    pista2: 'Perú tiene 52 razas documentadas',
+    dato: 'Siembra con el inicio de lluvias (oct–nov), cosecha con su fin (abr–may).',
+  },
+  {
+    nombre: 'Tomate',
+    especie: 'Solanum lycopersicum',
+    eje: 'verduras',
+    frase: '"El tomate mide eficiencia." Madura en 4 semanas a 25°C — y en 8 semanas a 15°C.',
+    pista1: 'Altitud: 0–2 000 msnm · Costa',
+    pista2: 'Perú tiene parentales silvestres en la costa central',
+    dato: 'Producción continua con picos en verano y otoño. Variedades: Pimiento, Chonto, Cherry.',
+  },
+  {
+    nombre: 'Lechuga',
+    especie: 'Lactuca sativa',
+    eje: 'verduras',
+    frase: '"La lechuga no espera." Ciclo de solo 60–90 días — acelera su crecimiento con el calor.',
+    pista1: 'Altitud: 0–3 000 msnm · Todo el territorio',
+    pista2: 'Disponible todo el año por producción escalonada',
+    dato: 'Su ciclo corto permite escalonar la producción durante los 12 meses del año.',
+  },
+  {
+    nombre: 'Espinaca',
+    especie: 'Spinacia oleracea',
+    eje: 'verduras',
+    frase: '"La espinaca mide el frío." Se espiga prematuramente al superar los 25°C.',
+    pista1: 'Altitud: 0–3 000 msnm · Mejor en otoño-invierno',
+    pista2: 'Temporada: abril a septiembre',
+    dato: 'Adaptada a valles peruanos. Mejor en estación fresca.',
+  },
+  {
+    nombre: 'Quinua',
+    especie: 'Chenopodium quinoa',
+    eje: 'granos',
+    frase: '"La quinua mide el frío extremo." Soporta heladas hasta −8°C sin rendirse.',
+    pista1: 'Altitud: 2 800–4 200 msnm · Puna y Suni',
+    pista2: 'Perú tiene más de 3 000 variedades registradas',
+    dato: 'Proteína completa: 9 aminoácidos esenciales. FAO declaró 2013 Año Internacional de la Quinua.',
+  },
+  {
+    nombre: 'Kiwicha',
+    especie: 'Amaranthus caudatus',
+    eje: 'granos',
+    frase: '"La kiwicha mide la altitud media." Florece solo con días cortos — fotoperiodismo.',
+    pista1: 'Altitud: 1 000–3 200 msnm · Quechua y Suni',
+    pista2: '16–18% proteína, alta en lisina',
+    dato: 'Domesticada en los Andes hace 4 000–6 000 años.',
+  },
+  {
+    nombre: 'Papa',
+    especie: 'Solanum tuberosum',
+    eje: 'raices',
+    frase: '"La papa es el tiempo." El chuño es tiempo congelado — tecnología andina de 4 000 años.',
+    pista1: 'Altitud: 100–4 200 msnm · El rango más amplio de todos',
+    pista2: 'Más de 4 000 variedades nativas en Perú',
+    dato: 'Perú es el principal centro de origen mundial. 711 313 familias productoras.',
+  },
+  {
+    nombre: 'Camote',
+    especie: 'Ipomoea batatas',
+    eje: 'raices',
+    frase: '"El camote viaja." Cruzó el Océano Pacífico precolombinamente — hallado en Polinesia.',
+    pista1: 'Altitud: 0–2 500 msnm · Costa y valles',
+    pista2: 'Evidencias arqueológicas en Perú desde 2500 a.C.',
+    dato: 'Resistente a la sequía. Variedad morada: alta en antioxidantes.',
+  },
+  {
+    nombre: 'Oca',
+    especie: 'Oxalis tuberosa',
+    eje: 'raices',
+    frase: '"La oca dulcifica con el sol." Necesita 1 a 2 semanas expuesta al sol poscosecha para transformar su sabor.',
+    pista1: 'Altitud: 3 000–4 100 msnm · Puna',
+    pista2: 'Segundo tubérculo andino más importante tras la papa',
+    dato: 'Domesticada en los altos Andes. Requiere exposición solar poscosecha para endulzar.',
+  },
+];
+
+const COLORES_EJE = {
+  frutas:   '#C45A35',
+  verduras: '#4A8A22',
+  granos:   '#C87A18',
+  raices:   '#1A5A9A',
+};
+
+const LETRAS = ['A','B','C','D'];
+const TOTAL_RONDAS = 8;
+
+let orden = [];
+let rondaActual = 0;
+let correctas = 0;
+let racha = 0;
+let intentos = 0;
+let pistasUsadas = 0;
+let respondido = false;
+let historial = [];
+
+function mezclar(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function iniciar() {
+  orden = mezclar(PRODUCTOS).slice(0, TOTAL_RONDAS);
+  rondaActual = 0;
+  correctas = 0;
+  racha = 0;
+  historial = [];
+  actualizarMarcador();
+  renderRonda();
+}
+
+function actualizarMarcador() {
+  document.getElementById('mCorrectas').textContent = correctas;
+  document.getElementById('mRonda').textContent = (rondaActual + 1) + '/' + TOTAL_RONDAS;
+  document.getElementById('mRacha').textContent = racha;
+}
+
+function generarOpciones(correcto) {
+  const otros = PRODUCTOS.filter(p => p.nombre !== correcto.nombre);
+  const distractores = mezclar(otros).slice(0, 3);
+  return mezclar([correcto, ...distractores]);
+}
+
+function renderRonda() {
+  if (rondaActual >= TOTAL_RONDAS) { mostrarFinal(); return; }
+
+  intentos = 0;
+  pistasUsadas = 0;
+  respondido = false;
+  const prod = orden[rondaActual];
+  const opciones = generarOpciones(prod);
+
+  actualizarMarcador();
+
+  const wrap = document.getElementById('juegoWrap');
+  wrap.style.animation = 'none';
+  void wrap.offsetWidth;
+  wrap.style.animation = 'fadeUp 0.4s ease both';
+
+  wrap.innerHTML = `
+    <div class="ronda-info">
+      <div class="ronda-num">Ronda ${rondaActual + 1} de ${TOTAL_RONDAS}</div>
+      <div class="vidas-wrap">
+        <div class="vida" id="v1"></div>
+        <div class="vida" id="v2"></div>
+        <div class="vida" id="v3"></div>
+      </div>
+    </div>
+
+    <div class="frase-card">
+      <div class="frase-label">Lee la frase relacional</div>
+      <div class="frase-texto" id="fraseTexto">${prod.frase}</div>
+    </div>
+
+    <div class="pistas-wrap">
+      <button class="pista-btn" id="pista1Btn" onclick="usarPista(1)">↯ Pista 1: altitud</button>
+      <button class="pista-btn" id="pista2Btn" onclick="usarPista(2)">↯ Pista 2: dato extra</button>
+    </div>
+
+    <div class="pista-visible" id="pistaVisible"></div>
+
+    <div class="opciones-grid" id="opcionesGrid">
+      ${opciones.map((o, i) => `
+        <button class="opcion-btn" id="opc${i}" onclick="elegir(${i}, '${o.nombre}', '${prod.nombre}')">
+          <div class="opcion-letra">${LETRAS[i]}</div>
+          <span>${o.nombre}</span>
+        </button>
+      `).join('')}
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-siguiente" id="btnSig" onclick="siguiente()">
+      ${rondaActual + 1 < TOTAL_RONDAS ? '→ Siguiente producto' : '→ Ver resultado final'}
+    </button>
+  `;
+
+  // Guardar referencia del producto actual
+  wrap.dataset.correcto = prod.nombre;
+  wrap.dataset.pista1 = prod.pista1;
+  wrap.dataset.pista2 = prod.pista2;
+  wrap.dataset.dato = prod.dato;
+}
+
+function usarPista(num) {
+  if (respondido) return;
+  const wrap = document.getElementById('juegoWrap');
+  const pv = document.getElementById('pistaVisible');
+  const btn = document.getElementById('pista' + num + 'Btn');
+
+  if (num === 1) {
+    pv.textContent = '↯ ' + wrap.dataset.pista1;
+    document.getElementById('v1').classList.add('perdida');
+  } else {
+    pv.textContent = '↯ ' + wrap.dataset.pista2;
+    document.getElementById('v2').classList.add('perdida');
+  }
+
+  pv.classList.add('show');
+  btn.classList.add('usada');
+  btn.disabled = true;
+  pistasUsadas++;
+}
+
+function elegir(idx, elegido, correcto) {
+  if (respondido) return;
+  intentos++;
+
+  const btn = document.getElementById('opc' + idx);
+  const fb = document.getElementById('feedback');
+  const wrap = document.getElementById('juegoWrap');
+
+  if (elegido === correcto) {
+    respondido = true;
+    btn.classList.add('correcta');
+    correctas++;
+    racha++;
+
+    const prod = orden[rondaActual];
+    historial.push({ nombre: prod.nombre, frase: prod.frase, correcto: true });
+
+    let msg = '';
+    if (intentos === 1 && pistasUsadas === 0) {
+      msg = `<strong>¡Perfecto!</strong> Sin pistas y al primer intento. ${wrap.dataset.dato}`;
+    } else if (intentos === 1) {
+      msg = `<strong>¡Correcto!</strong> ${wrap.dataset.dato}`;
+    } else {
+      msg = `<strong>¡Correcto!</strong> ${wrap.dataset.dato}`;
+    }
+
+    fb.className = 'feedback correcto';
+    fb.innerHTML = msg;
+    document.getElementById('v' + (3 - (3 - intentos))).classList.add('perdida');
+    document.getElementById('btnSig').classList.add('show');
+    actualizarMarcador();
+    deshabilitarOpciones();
+
+  } else {
+    btn.classList.add('incorrecta');
+    btn.disabled = true;
+
+    const vida = document.getElementById('v' + intentos);
+    if (vida) vida.classList.add('perdida');
+
+    if (intentos >= 3) {
+      respondido = true;
+      racha = 0;
+      const prod = orden[rondaActual];
+      historial.push({ nombre: prod.nombre, frase: prod.frase, correcto: false });
+
+      fb.className = 'feedback agotado';
+      fb.innerHTML = `<strong>Era ${correcto}.</strong> ${wrap.dataset.dato}`;
+      document.getElementById('btnSig').classList.add('show');
+      actualizarMarcador();
+      deshabilitarOpciones();
+
+      // Mostrar correcta
+      const btns = document.querySelectorAll('.opcion-btn');
+      btns.forEach(b => {
+        if (b.querySelector('span') && b.querySelector('span').textContent === correcto) {
+          b.classList.add('correcta');
+        }
+      });
+    } else {
+      fb.className = 'feedback incorrecto';
+      fb.innerHTML = `<strong>No es ${elegido}.</strong> Quedan ${3 - intentos} ${3 - intentos === 1 ? 'intento' : 'intentos'}.`;
+      // shake
+      const card = document.querySelector('.frase-card');
+      card.classList.add('shake');
+      setTimeout(() => card.classList.remove('shake'), 300);
+    }
+  }
+}
+
+function deshabilitarOpciones() {
+  document.querySelectorAll('.opcion-btn').forEach(b => b.disabled = true);
+  document.getElementById('pista1Btn').disabled = true;
+  document.getElementById('pista2Btn').disabled = true;
+}
+
+function siguiente() {
+  rondaActual++;
+  if (rondaActual >= TOTAL_RONDAS) {
+    mostrarFinal();
+  } else {
+    renderRonda();
+  }
+}
+
+function mostrarFinal() {
+  document.getElementById('juegoWrap').innerHTML = '';
+  document.getElementById('mRonda').textContent = TOTAL_RONDAS + '/' + TOTAL_RONDAS;
+
+  const final = document.getElementById('finalWrap');
+  final.style.display = 'block';
+
+  const pct = Math.round((correctas / TOTAL_RONDAS) * 100);
+  let mensaje = '';
+  if (correctas === TOTAL_RONDAS) mensaje = 'Conoces cada relación de memoria. Los alimentos te hablan.';
+  else if (correctas >= 6) mensaje = 'Tienes un oído relacional muy afinado. Sigues aprendiendo.';
+  else if (correctas >= 4) mensaje = 'Vas conociendo el territorio. Cada frase es una puerta.';
+  else mensaje = 'El territorio tiene muchas capas. Vuelve a intentarlo.';
+
+  const frasesHistorial = historial.slice(0, 4).map(h =>
+    `<div class="frase-mini"><strong>${h.nombre}</strong> ${h.correcto ? '✓' : '✗'} — ${h.frase}</div>`
+  ).join('');
+
+  final.innerHTML = `
+    <div class="final-score">
+      <div class="final-label">Resultado final</div>
+      <div class="final-num">${correctas}</div>
+      <div class="final-de">de ${TOTAL_RONDAS} correctas · ${pct}%</div>
+      <div class="final-mensaje">${mensaje}</div>
+    </div>
+    <div class="final-frases">
+      <div class="final-frases-titulo">Frases de esta partida</div>
+      ${frasesHistorial}
+    </div>
+    <button class="btn-reiniciar" onclick="reiniciar()">→ Jugar de nuevo</button>
+  `;
+
+  final.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function reiniciar() {
+  document.getElementById('finalWrap').style.display = 'none';
+  document.getElementById('finalWrap').innerHTML = '';
+  iniciar();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+iniciar();
+</script>
+</body>
+</html>
